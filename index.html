@@ -1,50 +1,61 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>21點 Hi-Lo 算牌訓練器</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>
+21點 Hi-Lo 職業算牌訓練器
+</title>
+
 
 <style>
 
 *{
-    box-sizing:border-box;
+box-sizing:border-box;
 }
+
 
 body{
 
-    font-family:
-    "Segoe UI",
-    Arial,
-    sans-serif;
+font-family:
+Arial,
+"Microsoft JhengHei",
+sans-serif;
 
-    background:
-    linear-gradient(135deg,#101820,#1b4332);
+background:
+linear-gradient(
+135deg,
+#071a14,
+#12372a
+);
 
-    color:white;
+color:white;
 
-    padding:20px;
+padding:20px;
 
 }
 
 
 .container{
 
-    max-width:1200px;
+max-width:1200px;
 
-    margin:auto;
+margin:auto;
 
 }
 
 
 h1{
 
-    text-align:center;
+text-align:center;
 
-    color:#00d9ff;
+color:#00e5ff;
 
-    margin-bottom:30px;
+margin-bottom:30px;
 
 }
 
@@ -52,38 +63,39 @@ h1{
 
 .panel{
 
-    background:
-    rgba(0,0,0,0.35);
+background:
+rgba(0,0,0,0.35);
 
-    border-radius:15px;
+border:2px solid #00e5ff;
 
-    padding:25px;
+border-radius:15px;
 
-    margin-bottom:25px;
+padding:25px;
 
-    border:2px solid #00d9ff;
+margin-bottom:25px;
 
 }
+
+
+
+h2{
+
+color:#00e5ff;
+
+}
+
 
 
 
 .settings{
 
-    display:flex;
+display:flex;
 
-    justify-content:center;
+justify-content:center;
 
-    gap:30px;
+gap:30px;
 
-    flex-wrap:wrap;
-
-}
-
-
-
-label{
-
-    font-size:18px;
+flex-wrap:wrap;
 
 }
 
@@ -91,13 +103,13 @@ label{
 
 input{
 
-    width:100px;
+width:120px;
 
-    padding:8px;
+padding:8px;
 
-    font-size:18px;
+font-size:18px;
 
-    text-align:center;
+text-align:center;
 
 }
 
@@ -105,28 +117,26 @@ input{
 
 button{
 
-    background:
-    linear-gradient(135deg,#00d9ff,#0077aa);
+padding:12px 25px;
 
-    color:white;
+border:none;
 
-    border:none;
+border-radius:8px;
 
-    border-radius:8px;
+font-size:18px;
 
-    padding:12px 25px;
+cursor:pointer;
 
-    font-size:18px;
+background:
+linear-gradient(
+135deg,
+#00e5ff,
+#0077aa
+);
 
-    cursor:pointer;
+color:white;
 
-}
-
-
-
-button:hover{
-
-    transform:translateY(-2px);
+margin:5px;
 
 }
 
@@ -134,33 +144,22 @@ button:hover{
 
 button:disabled{
 
-    background:#555;
+background:#555;
 
 }
 
-
-
-.hand-title{
-
-    font-size:22px;
-
-    color:#00d9ff;
-
-    margin-bottom:10px;
-
-}
 
 
 
 .cards{
 
-    display:flex;
+display:flex;
 
-    gap:10px;
+gap:10px;
 
-    flex-wrap:wrap;
+flex-wrap:wrap;
 
-    min-height:100px;
+min-height:100px;
 
 }
 
@@ -168,86 +167,101 @@ button:disabled{
 
 .card{
 
-    width:65px;
+width:65px;
 
-    height:90px;
+height:90px;
 
-    background:white;
+background:white;
 
-    color:black;
+color:black;
 
-    border-radius:10px;
+border-radius:10px;
 
-    display:flex;
+display:flex;
 
-    justify-content:center;
+align-items:center;
 
-    align-items:center;
+justify-content:center;
 
-    font-size:30px;
+font-size:30px;
 
-    font-weight:bold;
+font-weight:bold;
+
+}
+
+
+.hidden-card{
+
+background:#333;
+
+color:white;
+
+}
+
+
+.result{
+
+margin:20px 0;
+
+padding:15px;
+
+border-radius:10px;
+
+text-align:center;
+
+font-size:24px;
+
+background:
+rgba(255,255,255,0.1);
+
+}
+
+
+.grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(180px,1fr));
+
+gap:15px;
 
 }
 
 
 
-.controls{
+.box{
 
-    text-align:center;
+background:
+rgba(255,255,255,0.1);
 
-    margin-top:20px;
+border-radius:10px;
 
-}
+padding:15px;
 
-
-
-.info-grid{
-
-    display:grid;
-
-    grid-template-columns:
-
-    repeat(auto-fit,minmax(180px,1fr));
-
-    gap:15px;
+text-align:center;
 
 }
 
 
 
-.info-box{
+.label{
 
-    background:
-    rgba(255,255,255,0.1);
+color:#aaa;
 
-    padding:15px;
-
-    border-radius:10px;
-
-    text-align:center;
+font-size:16px;
 
 }
 
 
 
-.info-title{
+.value{
 
-    color:#aaa;
+font-size:30px;
 
-    font-size:16px;
+font-weight:bold;
 
-}
-
-
-
-.info-value{
-
-    font-size:30px;
-
-    color:#00d9ff;
-
-    font-weight:bold;
+color:#00e5ff;
 
 }
 
@@ -255,7 +269,7 @@ button:disabled{
 
 .good{
 
-    color:#00ff88;
+color:#00ff88;
 
 }
 
@@ -263,36 +277,26 @@ button:disabled{
 
 .bad{
 
-    color:#ff5555;
+color:#ff5555;
 
 }
 
 
 
-.result{
 
-    margin-top:20px;
+.training{
 
-    text-align:center;
-
-    font-size:24px;
-
-    padding:15px;
-
-    border-radius:10px;
-
-    background:
-    rgba(255,255,255,0.1);
+text-align:center;
 
 }
 
 
 
-.input-area{
+#checkResult{
 
-    text-align:center;
+font-size:22px;
 
-    margin-top:20px;
+margin-top:15px;
 
 }
 
@@ -310,8 +314,9 @@ button:disabled{
 
 
 <h1>
-🎲 21點 Hi-Lo 真實算牌訓練器
+🎲 21點 Hi-Lo 職業算牌訓練器
 </h1>
+
 
 
 
@@ -320,34 +325,41 @@ button:disabled{
 <div class="panel">
 
 
-<h2>牌局設定</h2>
+<h2>
+牌局設定
+</h2>
 
 
 <div class="settings">
 
 
 <label>
+
 牌副：
-<input 
+
+<input
 id="numDecks"
 type="number"
 value="6"
 min="1"
 max="8">
+
 </label>
 
 
 
 <label>
+
 模擬局數：
+
 <input
 id="numGames"
 type="number"
 value="1000">
+
 </label>
 
 
-
 </div>
 
 
@@ -357,26 +369,31 @@ value="1000">
 
 
 
-<!-- 遊戲 -->
+
+<!-- 遊戲區 -->
+
 
 <div class="panel">
 
 
-<h2>牌局</h2>
+<h2>
+目前牌局
+</h2>
 
 
-
-<div>
 
 <div class="hand-title">
+
 莊家
-</div>
-
-
-<div class="cards" id="dealerCards"></div>
-
 
 </div>
+
+
+<div
+class="cards"
+id="dealerCards">
+</div>
+
 
 
 
@@ -384,22 +401,25 @@ value="1000">
 
 
 
-<div>
 
 <div class="hand-title">
+
 玩家
-</div>
-
-
-<div class="cards" id="playerCards"></div>
-
 
 </div>
 
 
+<div
+class="cards"
+id="playerCards">
+</div>
 
 
-<div class="result" id="result">
+
+
+<div
+class="result"
+id="result">
 
 等待開始
 
@@ -407,34 +427,60 @@ value="1000">
 
 
 
-<div class="controls">
+
+<div style="text-align:center; margin:15px 0;">
+
+<label style="margin-right:15px;">
+籌碼：<span id="bankroll">10000</span> 元
+</label>
+
+<label>
+底注：
+<input id="betAmount" type="number" value="10" min="1" max="10000" style="width:100px;">
+</label>
+
+</div>
+
+
+<div style="text-align:center">
 
 
 <button onclick="newGame()">
+
 開始新局
+
 </button>
 
 
-<button id="hitBtn"
+
+<button
+id="hitBtn"
 onclick="hit()"
 disabled>
-要牌
+
+HIT 要牌
+
 </button>
 
 
-<button id="standBtn"
+
+<button
+id="standBtn"
 onclick="stand()"
 disabled>
-停牌
+
+STAND 停牌
+
 </button>
 
 
-
 </div>
 
 
 
 </div>
+
+
 
 
 
@@ -443,92 +489,86 @@ disabled>
 
 <!-- 算牌資訊 -->
 
+
 <div class="panel">
 
 
 <h2>
-📊 算牌資訊
+📊 職業算牌資訊
 </h2>
 
 
 
-<div class="info-grid">
+<div class="grid">
 
 
 
-<div class="info-box">
+<div class="box">
 
-<div class="info-title">
-Running Count RC
+<div class="label">
+Running Count
 </div>
 
-
-<div class="info-value"
-id="rc">
+<div class="value" id="runningCount">
 0
 </div>
 
-
 </div>
 
 
 
 
+<div class="box">
 
-<div class="info-box">
-
-<div class="info-title">
-True Count TC
+<div class="label">
+True Count
 </div>
 
-
-<div class="info-value"
+<div
+class="value"
 id="tc">
+
 0
-</div>
-
 
 </div>
 
+</div>
 
 
 
 
-<div class="info-box">
+<div class="box">
 
-<div class="info-title">
+<div class="label">
 剩餘牌數
 </div>
 
-
-<div class="info-value"
+<div
+class="value"
 id="cardsLeft">
+
 0
-</div>
-
 
 </div>
 
+</div>
 
 
 
 
-<div class="info-box">
+<div class="box">
 
-<div class="info-title">
+<div class="label">
 剩餘副數
 </div>
 
-
-<div class="info-value"
+<div
+class="value"
 id="decksLeft">
+
 0
-</div>
-
 
 </div>
-
-
 
 </div>
 
@@ -536,25 +576,59 @@ id="decksLeft">
 
 
 
-<div class="input-area">
+<div class="box">
+
+<div class="label">
+建議打法
+</div>
+
+<div
+class="value"
+id="suggestion">
+
+-
+
+</div>
+
+</div>
 
 
-<p>
-輸入你的 RC：
-</p>
+
+</div>
+
+
+
+
+
+
+<br>
+
+
+<div class="training">
+
+
+<h3>
+輸入你的 RC
+</h3>
 
 
 <input
 id="userRC"
-type="number">
+type="number"
+placeholder="RC">
 
 
 <button onclick="checkRC()">
+
 驗證
+
 </button>
 
 
-<div id="checkResult"></div>
+
+<div id="checkResult">
+
+</div>
 
 
 </div>
@@ -567,86 +641,130 @@ type="number">
 
 
 
-<!-- 統計 -->
+
+
+
+
+<!-- 模擬統計 -->
+
 
 <div class="panel">
 
 
 <h2>
-📈 模擬統計
+📈 統計分析
 </h2>
 
 
-<div class="info-grid">
+<div class="grid">
 
 
-<div class="info-box">
-<div class="info-title">
+
+<div class="box">
+
+<div class="label">
 勝率
 </div>
-<div class="info-value"
+
+<div
+class="value"
 id="winRate">
+
 0%
+
 </div>
+
 </div>
 
 
 
-<div class="info-box">
-<div class="info-title">
+
+<div class="box">
+
+<div class="label">
 平均收益
 </div>
-<div class="info-value"
+
+<div
+class="value"
 id="avgProfit">
+
 0
+
 </div>
+
 </div>
 
 
 
-<div class="info-box">
-<div class="info-title">
+
+<div class="box">
+
+<div class="label">
 標準差
 </div>
-<div class="info-value"
+
+<div
+class="value"
 id="std">
+
 0
-</div>
-</div>
 
-
+</div>
 
 </div>
 
 
-<div class="controls">
+
+
+</div>
+
+
+
+
+<div style="text-align:center">
+
 
 <button onclick="simulate()">
-開始1000局模擬
+
+模擬1000局
+
 </button>
+
+
+
+<button onclick="quickTraining()">
+
+快速閃牌訓練
+
+</button>
+
 
 
 <button onclick="resetAll()">
-清除
+
+重置
+
 </button>
 
 
-</div>
-
 
 </div>
 
 
 
-
 </div>
+
+
+
 
 
 <script>
 
-// ==============================
-// 牌組與算牌核心
-// ==============================
+
+// =====================================
+// 全域變數
+// =====================================
 
 
 let deck = [];
@@ -657,8 +775,14 @@ let dealerHand = [];
 
 let gameActive = false;
 
+let bankroll = 10000;
 
-// Hi-Lo Running Count
+let currentBet = 10;
+
+let dealerRevealAll = false;
+
+
+// 真實 RC（不顯示）
 
 let runningCount = 0;
 
@@ -669,13 +793,9 @@ let runningCount = 0;
 let stats = {
 
     games:0,
-
     wins:0,
-
     loses:0,
-
     profit:0,
-
     results:[]
 
 };
@@ -683,13 +803,15 @@ let stats = {
 
 
 
-
+// =====================================
 // 建立牌組
+// =====================================
+
 
 function createDeck(){
 
 
-    let numDecks =
+    let decks =
     Number(
         document.getElementById("numDecks").value
     );
@@ -714,12 +836,14 @@ function createDeck(){
 
 
 
-    for(let d=0;d<numDecks;d++){
+    for(let d=0;d<decks;d++){
 
 
-        for(let i=0;i<4;i++){
+        for(let suit=0;suit<4;suit++){
+
 
             deck.push(...cards);
+
 
         }
 
@@ -733,6 +857,7 @@ function createDeck(){
 
     updateCountDisplay();
 
+
 }
 
 
@@ -740,12 +865,20 @@ function createDeck(){
 
 
 
+
+// =====================================
 // 洗牌
+// =====================================
+
 
 function shuffle(){
 
 
-    for(let i=deck.length-1;i>0;i--){
+    for(
+        let i=deck.length-1;
+        i>0;
+        i--
+    ){
 
 
         let j =
@@ -758,9 +891,9 @@ function shuffle(){
             deck[i],
             deck[j]
 
-        ] =
+        ]
+        =
         [
-
             deck[j],
             deck[i]
 
@@ -768,19 +901,21 @@ function shuffle(){
 
     }
 
+
 }
 
 
 
-
-
-// ==============================
-// Hi-Lo 計數
-// ==============================
+// =====================================
+// Hi-Lo Count
+// =====================================
 
 
 function hiLo(card){
 
+
+
+    // 2~6
 
     if(
         card>=2 &&
@@ -792,6 +927,8 @@ function hiLo(card){
     }
 
 
+
+    // 7~9
 
     if(
         card===7 ||
@@ -818,9 +955,21 @@ function hiLo(card){
 
 
 
+// =====================================
 // 抽牌
+// =====================================
+
 
 function drawCard(){
+
+
+
+    if(deck.length===0){
+
+        createDeck();
+
+    }
+
 
 
     let card =
@@ -828,7 +977,7 @@ function drawCard(){
 
 
 
-    // 更新RC
+    // 更新 RC
 
     runningCount += hiLo(card);
 
@@ -840,6 +989,7 @@ function drawCard(){
 
     return card;
 
+
 }
 
 
@@ -847,53 +997,49 @@ function drawCard(){
 
 
 
-// 剩餘牌數
+
+// =====================================
+// 剩餘牌 / TC
+// =====================================
+
 
 function remainingCards(){
 
 
     return deck.length;
 
+
 }
 
 
 
-
-
-// 剩餘副數
 
 function remainingDecks(){
 
 
     return deck.length / 52;
 
+
 }
 
 
 
 
 
+function getTrueCount(){
 
 
-// True Count
-
-function trueCount(){
-
-
-    let remain =
+    let decks =
     remainingDecks();
 
 
 
-    if(remain<=0){
-
+    if(decks<=0)
         return 0;
 
-    }
 
 
-
-    return runningCount / remain;
+    return runningCount / decks;
 
 
 }
@@ -904,82 +1050,37 @@ function trueCount(){
 
 
 
-// 更新算牌資訊
+
+// =====================================
+// 更新畫面
+// =====================================
+
 
 function updateCountDisplay(){
 
 
-
-    document.getElementById("rc")
+    document.getElementById("runningCount")
     .innerHTML =
-
-    runningCount>=0
-
-    ?
-
-    "+"+runningCount
-
-    :
-
     runningCount;
-
-
-
-    let tc =
-    trueCount();
-
 
 
     document.getElementById("tc")
     .innerHTML =
-
-    tc.toFixed(2);
+    getTrueCount()
+    .toFixed(2);
 
 
 
     document.getElementById("cardsLeft")
     .innerHTML =
-
     remainingCards();
 
 
 
     document.getElementById("decksLeft")
     .innerHTML =
-
     remainingDecks()
     .toFixed(2);
-
-
-
-    // 顏色提示
-
-
-    let rcBox =
-    document.getElementById("rc");
-
-
-
-    if(runningCount>0){
-
-        rcBox.className =
-        "info-value good";
-
-    }
-
-    else if(runningCount<0){
-
-        rcBox.className =
-        "info-value bad";
-
-    }
-
-    else{
-
-        rcBox.className =
-        "info-value";
-
-    }
 
 
 
@@ -990,11 +1091,23 @@ function updateCountDisplay(){
 
 
 
+function updateBankrollDisplay(){
 
-// ==============================
-// 點數計算
-// ==============================
+    document.getElementById("bankroll")
+    .innerHTML =
+    bankroll;
 
+
+    document.getElementById("betAmount")
+    .value =
+    currentBet;
+
+}
+
+
+// =====================================
+// Blackjack 點數
+// =====================================
 
 
 function cardValue(card){
@@ -1013,7 +1126,9 @@ function cardValue(card){
 
 
 
+
 function handValue(hand){
+
 
 
     let total=0;
@@ -1038,12 +1153,16 @@ function handValue(hand){
 
 
 
-    while(total>21 && aces>0){
+    while(
+        total>21 &&
+        aces>0
+    ){
 
 
         total-=10;
 
         aces--;
+
 
     }
 
@@ -1059,7 +1178,8 @@ function handValue(hand){
 
 
 
-function bust(hand){
+
+function isBust(hand){
 
 
     return handValue(hand)>21;
@@ -1071,7 +1191,13 @@ function bust(hand){
 
 
 
+
+
+
+// =====================================
 // 顯示牌
+// =====================================
+
 
 function showCards(){
 
@@ -1081,6 +1207,7 @@ function showCards(){
     document.getElementById(
         "playerCards"
     );
+
 
 
     let d =
@@ -1098,20 +1225,15 @@ function showCards(){
 
 
 
-    playerHand.forEach(c=>{
+    playerHand.forEach(card=>{
 
 
         let div =
-        document.createElement(
-            "div"
-        );
-
+        document.createElement("div");
 
         div.className="card";
 
-
-        div.innerHTML=c;
-
+        div.innerHTML=card;
 
         p.appendChild(div);
 
@@ -1122,44 +1244,75 @@ function showCards(){
 
 
 
-    dealerHand.forEach(c=>{
+    dealerHand.forEach((card,index)=>{
 
 
         let div =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
+        if(index===0 || dealerRevealAll){
 
-        div.className="card";
+            div.className="card";
+            div.innerHTML=card;
 
+        }
+        else{
 
-        div.innerHTML=c;
+            div.className="card hidden-card";
+            div.innerHTML="?";
 
+        }
 
         d.appendChild(div);
-
 
 
     });
 
 
+
 }
 
-// ==============================
+
+
+
+// =====================================
 // 開始新局
-// ==============================
+// =====================================
 
 
 function newGame(){
 
+    let bet = Number(
+        document.getElementById("betAmount").value
+    );
 
-    if(deck.length < 60){
+
+    if(!Number.isFinite(bet) || bet <= 0){
+
+        document.getElementById("result").innerHTML = "底注必須大於 0";
+        return;
+
+    }
+
+
+    if(bankroll < bet){
+
+        document.getElementById("result").innerHTML = "籌碼不足，請減少底注";
+        return;
+
+    }
+
+
+    if(deck.length < 52){
 
         createDeck();
 
     }
 
+
+    currentBet = bet;
+
+    bankroll -= currentBet;
 
 
     playerHand=[];
@@ -1180,11 +1333,17 @@ function newGame(){
 
 
 
+    dealerRevealAll=false;
+
     gameActive=true;
 
 
 
     showCards();
+
+    updateCountDisplay();
+    updateBankrollDisplay();
+    updateSuggestion();
 
 
 
@@ -1198,7 +1357,8 @@ function newGame(){
 
 
     document.getElementById("result")
-    .innerHTML="遊戲中";
+    .innerHTML="遊戲進行中";
+
 
 
 }
@@ -1209,9 +1369,9 @@ function newGame(){
 
 
 
-// ==============================
-// 玩家要牌
-// ==============================
+// =====================================
+// 玩家 HIT
+// =====================================
 
 
 function hit(){
@@ -1231,14 +1391,20 @@ function hit(){
     showCards();
 
 
+    updateSuggestion();
 
-    if(bust(playerHand)){
 
 
-        endRound(
+    if(isBust(playerHand)){
+
+        dealerRevealAll=true;
+        showCards();
+
+        finishGame(
             -1,
             "玩家爆牌"
         );
+
 
     }
 
@@ -1252,9 +1418,9 @@ function hit(){
 
 
 
-// ==============================
-// 玩家停牌
-// ==============================
+// =====================================
+// 玩家 STAND
+// =====================================
 
 
 function stand(){
@@ -1265,19 +1431,21 @@ function stand(){
 
 
 
-    // 莊家規則
 
     while(
         handValue(dealerHand)<17
     ){
 
+
         dealerHand.push(
             drawCard()
         );
 
+
     }
 
 
+    dealerRevealAll=true;
 
     showCards();
 
@@ -1293,11 +1461,10 @@ function stand(){
 
 
 
+    if(isBust(dealerHand)){
 
-    if(bust(dealerHand)){
 
-
-        endRound(
+        finishGame(
             1,
             "莊家爆牌，玩家勝"
         );
@@ -1308,7 +1475,7 @@ function stand(){
     else if(p>d){
 
 
-        endRound(
+        finishGame(
             1,
             "玩家勝"
         );
@@ -1319,7 +1486,7 @@ function stand(){
     else if(p<d){
 
 
-        endRound(
+        finishGame(
             -1,
             "玩家輸"
         );
@@ -1330,14 +1497,13 @@ function stand(){
     else{
 
 
-        endRound(
+        finishGame(
             0,
-            "平局"
+            "平手"
         );
 
 
     }
-
 
 
 }
@@ -1349,15 +1515,33 @@ function stand(){
 
 
 
-// ==============================
-// 結束單局
-// ==============================
+
+// =====================================
+// 結束
+// =====================================
 
 
-function endRound(result,msg){
+function finishGame(result,msg){
+
 
 
     gameActive=false;
+
+    dealerRevealAll=true;
+
+
+
+    if(result===1){
+
+        bankroll += currentBet * 2;
+
+    }
+
+    else if(result===0){
+
+        bankroll += currentBet;
+
+    }
 
 
 
@@ -1374,6 +1558,185 @@ function endRound(result,msg){
     .disabled=true;
 
 
+    updateBankrollDisplay();
+
+
+}
+
+
+
+
+
+
+
+
+// =====================================
+// Hi-Lo Index 偏差表
+// =====================================
+//
+// TC 達到門檻才改變策略
+//
+
+
+const indexPlays=[
+
+
+{
+player:16,
+dealer:10,
+tc:0,
+action:"STAND"
+},
+
+
+{
+player:15,
+dealer:10,
+tc:4,
+action:"STAND"
+},
+
+
+{
+player:10,
+dealer:"A",
+tc:4,
+action:"DOUBLE"
+},
+
+
+{
+player:12,
+dealer:3,
+tc:-2,
+action:"HIT"
+},
+
+
+{
+player:12,
+dealer:2,
+tc:-1,
+action:"HIT"
+},
+
+
+{
+player:13,
+dealer:2,
+tc:-1,
+action:"STAND"
+},
+
+
+{
+player:13,
+dealer:3,
+tc:-2,
+action:"STAND"
+},
+
+
+{
+player:9,
+dealer:2,
+tc:1,
+action:"DOUBLE"
+},
+
+
+{
+player:9,
+dealer:7,
+tc:3,
+action:"DOUBLE"
+},
+
+
+{
+player:11,
+dealer:"A",
+tc:1,
+action:"DOUBLE"
+}
+
+
+];
+
+
+
+
+
+
+
+
+// =====================================
+// 基本策略
+// =====================================
+
+
+function basicStrategy(player,dealer){
+
+
+
+    // Blackjack
+
+    if(player>=21)
+        return "STAND";
+
+
+
+    // 17以上
+
+    if(player>=17)
+        return "STAND";
+
+
+
+    // 13~16
+
+    if(
+        player>=13 &&
+        dealer<=6
+    )
+        return "STAND";
+
+
+
+    // 12
+
+    if(
+        player===12 &&
+        dealer>=4 &&
+        dealer<=6
+    )
+        return "STAND";
+
+
+
+    // 9
+
+    if(player===9)
+        return "DOUBLE";
+
+
+
+    // 10
+
+    if(player===10)
+        return "DOUBLE";
+
+
+
+    // 11
+
+    if(player===11)
+        return "DOUBLE";
+
+
+
+    return "HIT";
+
 
 }
 
@@ -1385,15 +1748,112 @@ function endRound(result,msg){
 
 
 
-// ==============================
+// =====================================
+// Index Play 判斷
+// =====================================
+
+
+function getStrategy(){
+
+
+    let player =
+    handValue(playerHand);
+
+
+
+    let dealer =
+    dealerHand[0];
+
+
+
+    let tc =
+    getTrueCount();
+
+
+
+    for(let rule of indexPlays){
+
+
+        if(
+            rule.player===player &&
+            rule.dealer===dealer
+        ){
+
+
+            if(tc>=rule.tc){
+
+                return rule.action;
+
+            }
+
+        }
+
+
+    }
+
+
+
+    return basicStrategy(
+        player,
+        dealer
+    );
+
+
+}
+
+
+
+
+
+
+
+
+
+// =====================================
+// 顯示建議
+// =====================================
+
+
+function updateSuggestion(){
+
+
+
+    if(playerHand.length===0)
+        return;
+
+
+
+    let action =
+    getStrategy();
+
+
+
+    document.getElementById(
+        "suggestion"
+    )
+    .innerHTML=action;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =====================================
 // RC 驗證
-// ==============================
+// =====================================
 
 
 function checkRC(){
 
 
-    let input =
+    let user =
     Number(
         document.getElementById("userRC")
         .value
@@ -1401,18 +1861,22 @@ function checkRC(){
 
 
 
-    let output =
+    let box =
     document.getElementById(
         "checkResult"
     );
 
 
 
-    if(input===runningCount){
+    if(user===runningCount){
 
 
-        output.innerHTML =
-        "✅ RC 正確";
+        box.innerHTML =
+        "✅ 正確 RC<br>TC="
+        +
+        getTrueCount()
+        .toFixed(2);
+
 
 
     }
@@ -1420,9 +1884,16 @@ function checkRC(){
     else{
 
 
-        output.innerHTML =
-        "❌ 正確 RC = "
-        + runningCount;
+        box.innerHTML =
+        "❌ 錯誤<br>正確 RC="
+        +
+        runningCount
+        +
+        "<br>TC="
+        +
+        getTrueCount()
+        .toFixed(2);
+
 
 
     }
@@ -1433,43 +1904,91 @@ function checkRC(){
 
 
 
+// =====================================
+// 快速閃牌訓練模式
+// =====================================
 
 
-
-
-
-
-// ==============================
-// 自動模擬
-// ==============================
-
-
-
-function simulate(){
-
-
-    let times =
-    Number(
-        document.getElementById("numGames")
-        .value
-    );
+function quickTraining(){
 
 
     createDeck();
 
 
+    playerHand=[];
 
-    for(let i=0;i<times;i++){
-
-
-        simulateOne();
-
-
-    }
+    dealerHand=[];
 
 
 
-    updateStats();
+    let area =
+    document.getElementById(
+        "playerCards"
+    );
+
+
+
+    area.innerHTML="";
+
+
+
+    let count=0;
+
+
+
+    let timer =
+    setInterval(()=>{
+
+
+        if(count>=20){
+
+
+            clearInterval(timer);
+
+
+            document.getElementById(
+                "result"
+            )
+            .innerHTML =
+            "請輸入你的 RC";
+
+
+            return;
+
+
+        }
+
+
+
+        let card =
+        drawCard();
+
+
+
+        let div =
+        document.createElement(
+            "div"
+        );
+
+
+
+        div.className="card";
+
+
+        div.innerHTML=card;
+
+
+
+        area.appendChild(div);
+
+
+
+        count++;
+
+
+
+    },300);
+
 
 
 }
@@ -1481,10 +2000,40 @@ function simulate(){
 
 
 
-function simulateOne(){
+// =====================================
+// 自動模擬
+// =====================================
 
 
-    if(deck.length<20){
+function simulate(){
+
+    let games = Number(
+        document.getElementById("numGames").value
+    );
+
+    createDeck();
+
+    for(let i=0; i<games; i++){
+
+        // 模擬遊戲內容
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+function simulateRound(){
+
+
+
+    if(deck.length<40){
 
         createDeck();
 
@@ -1514,9 +2063,11 @@ function simulateOne(){
 
 
 
-    // 基本策略
+    // 簡化基本策略模擬
 
-    while(handValue(player)<17){
+    while(
+        handValue(player)<17
+    ){
 
 
         player.push(
@@ -1529,9 +2080,10 @@ function simulateOne(){
 
 
 
+    if(isBust(player)){
 
-    if(bust(player)){
 
+        stats.games++;
 
         stats.loses++;
 
@@ -1540,9 +2092,8 @@ function simulateOne(){
         stats.results.push(-1);
 
 
-        stats.games++;
-
         return;
+
 
     }
 
@@ -1550,7 +2101,10 @@ function simulateOne(){
 
 
 
-    while(handValue(dealer)<17){
+
+    while(
+        handValue(dealer)<17
+    ){
 
 
         dealer.push(
@@ -1563,11 +2117,13 @@ function simulateOne(){
 
 
 
+
+
     let result;
 
 
 
-    if(bust(dealer)){
+    if(isBust(dealer)){
 
 
         result=1;
@@ -1614,10 +2170,11 @@ function simulateOne(){
     stats.games++;
 
 
-    stats.profit+=result;
+    stats.profit += result;
 
 
     stats.results.push(result);
+
 
 
 
@@ -1625,7 +2182,7 @@ function simulateOne(){
         stats.wins++;
 
 
-    else if(result===-1)
+    if(result===-1)
         stats.loses++;
 
 
@@ -1640,9 +2197,9 @@ function simulateOne(){
 
 
 
-// ==============================
-// 統計
-// ==============================
+// =====================================
+// 統計分析
+// =====================================
 
 
 function updateStats(){
@@ -1651,28 +2208,22 @@ function updateStats(){
 
     let winRate =
     stats.games===0
-
     ?
-
     0
-
     :
-
     stats.wins /
     stats.games *
     100;
 
 
 
+
+
     let avg =
     stats.games===0
-
     ?
-
     0
-
     :
-
     stats.profit /
     stats.games;
 
@@ -1688,7 +2239,9 @@ function updateStats(){
 
 
 
-    for(let r of stats.results){
+    for(
+        let r of stats.results
+    ){
 
 
         variance +=
@@ -1699,32 +2252,42 @@ function updateStats(){
 
 
 
-    variance /=
+
+    variance /= 
     stats.results.length || 1;
 
 
 
     let std =
-    Math.sqrt(variance);
+    Math.sqrt(
+        variance
+    );
 
 
 
 
 
 
-    document.getElementById("winRate")
+    document.getElementById(
+        "winRate"
+    )
     .innerHTML =
-    winRate.toFixed(2)+"%";
+    winRate.toFixed(2)
+    +"%";
 
 
 
-    document.getElementById("avgProfit")
+    document.getElementById(
+        "avgProfit"
+    )
     .innerHTML =
     avg.toFixed(4);
 
 
 
-    document.getElementById("std")
+    document.getElementById(
+        "std"
+    )
     .innerHTML =
     std.toFixed(4);
 
@@ -1740,12 +2303,13 @@ function updateStats(){
 
 
 
-// ==============================
+// =====================================
 // 重置
-// ==============================
+// =====================================
 
 
 function resetAll(){
+
 
 
     stats={
@@ -1768,16 +2332,20 @@ function resetAll(){
 
 
 
-    document.getElementById("result")
-    .innerHTML="已重置";
+    document.getElementById(
+        "result"
+    )
+    .innerHTML =
+    "已重置";
 
 
 
     updateStats();
 
 
-
 }
+
+
 
 
 
@@ -1789,10 +2357,13 @@ function resetAll(){
 
 createDeck();
 
+updateCountDisplay();
+
 
 
 </script>
 
-</body>
-</html>
+
+
+
 
