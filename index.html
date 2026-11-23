@@ -1,7 +1,179 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>21點互動策略教練 V8｜計數即時建議</title><style>
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>21點互動策略教練 V16｜莊家爆牌機率逐項計算</title><style>
 :root{font-family:system-ui,'Noto Sans TC',sans-serif;color:#18283a;background:#f2f5fa}*{box-sizing:border-box}body{margin:0}.wrap{max-width:1220px;margin:auto;padding:20px 14px 50px}header h1{margin:0;font-size:27px}header p{margin:6px 0 16px;color:#536679}.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-bottom:13px}.stat,.panel{background:#fff;border:1px solid #dfe6ef;border-radius:13px;padding:14px}.stat small{display:block;color:#596b7f}.stat strong{font-size:22px}.layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(270px,.75fr);gap:13px}.felt{border-radius:16px;background:linear-gradient(135deg,#095941,#08775a);padding:18px;color:white;min-height:380px}.small{font-size:13px;opacity:.85}.cards{display:flex;gap:7px;flex-wrap:wrap;min-height:82px;margin:9px 0}.playingcard{width:53px;height:76px;border-radius:8px;background:#fff;border:2px solid #e0e8eb;box-shadow:0 2px 6px #0002;color:#192435;display:flex;flex-direction:column;justify-content:space-between;padding:6px;font-size:21px;font-weight:750}.playingcard .suit{align-self:end}.playingcard.red{color:#be283b}.playingcard.back{background:repeating-linear-gradient(45deg,#193e7f,#193e7f 6px,#3966a4 6px,#3966a4 12px);justify-content:center;align-items:center;color:white;border:3px solid white}hr{border:0;border-top:1px solid #ffffff55;margin:12px 0}.hands{display:flex;gap:9px;flex-wrap:wrap}.hand{padding:9px;border:2px solid #ffffff4a;border-radius:10px;min-width:165px;max-width:100%;flex:1}.hand.active{border-color:#f6de66;background:#ffffff17}.hand .cards{min-height:78px}button{font:inherit;font-weight:650;cursor:pointer;border:0;border-radius:9px;padding:10px 12px;background:#176ca8;color:white}button:disabled{opacity:.45;cursor:not-allowed}.btns{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}.btns button{flex:1;min-width:70px}.secondary{background:#e9f0f8;color:#245478}.green{background:#188262}.purple{background:#5b54a6}.gold{background:#f0d775;color:#473b14}.panel h2{font-size:18px;margin:0 0 10px}.note{background:#edf4fa;border-radius:9px;padding:12px;line-height:1.7;min-height:102px}.setting{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.setting select{padding:7px;border:1px solid #afc1d4;border-radius:7px;background:#fff}.muted{font-size:13px;color:#556779}.tools{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.tools button{font-size:13px}.legend{display:flex;flex-wrap:wrap;gap:10px;font-size:12px;margin:10px 0}.legend b{border-radius:4px;padding:3px 7px}.H{background:#bff0ce;color:#174b29}.S{background:#ffb8b7;color:#7d2424}.D{background:#8ce9f2;color:#104454}.P{background:#a8c8ff;color:#1b3d84}.X{background:#f5eabc;color:#66470c}.strategy-section{margin-top:15px}.tablewrap{overflow-x:auto;background:#fff;border:1px solid #dfe6ef;border-radius:10px}table.matrix{border-collapse:collapse;width:100%;min-width:660px;font-size:12px;table-layout:fixed}table.matrix th,table.matrix td{border:1px solid #d7e0e8;padding:7px 2px;text-align:center}table.matrix th{background:#233d5e;color:white}table.matrix th:first-child{width:123px}table.matrix td{font-weight:700}table.matrix tr td:first-child{background:#eaf0f6;color:#193b54;text-align:left;padding-left:9px}td.H{background:#bff0ce}td.S{background:#ffb8b7}td.D{background:#8ce9f2}td.P{background:#a8c8ff}td.X{background:#f5eabc}td.focus{outline:4px solid #ffb700;outline-offset:-4px;box-shadow:inset 0 0 0 1px #a16f00;position:relative;z-index:1}.tabbar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.tabbar button{font-size:13px;background:#edf2f8;color:#294a68}.tabbar button.sel{background:#1d6fa7;color:#fff}.details{line-height:1.7;font-size:14px}.result{background:#f3f8fc;border-radius:9px;padding:10px;margin-top:12px}.tip{background:#fff7df;border-left:4px solid #edbd45;padding:9px;margin-top:10px;border-radius:4px}.wide{margin-top:13px}.meter{height:8px;border-radius:8px;background:#dce5eb;overflow:hidden}.meter div{height:100%;background:#219b73}.positive{color:#0a7149}.negative{color:#b82734}.sr{position:absolute;left:-9999px}@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.wrap{padding:12px 9px}.stat strong{font-size:19px}.felt{min-height:0}.playingcard{width:46px;height:67px;font-size:19px}.hand{min-width:130px}}
 .countboard{margin-bottom:13px}.counthead{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.counthead h2{margin:0}.counthead span{font-size:13px;color:#46657d}.countmetrics{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:13px 0}.countmetrics>div{background:#f0f5fa;padding:11px;border-radius:9px}.countmetrics small{display:block;font-size:12px;color:#52657b}.countmetrics strong{font-size:23px;display:block;margin-top:4px}.countformula{background:#e5f4ef;border-left:4px solid #11865f;padding:10px;border-radius:5px;font-weight:650}.countlegend{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.countlegend b{padding:5px 10px;border-radius:6px;font-size:12px}.countlegend .low{background:#d6f4e2;color:#146037}.countlegend .neutral{background:#edf0f4;color:#4d5b70}.countlegend .high{background:#fbe3e3;color:#9c2731}.countscroll{max-height:260px;overflow:auto;border:1px solid #dbe5ef;border-radius:9px}.counttable{border-collapse:collapse;width:100%;font-size:13px}.counttable th,.counttable td{padding:8px;border-bottom:1px solid #e3e9f0;text-align:left}.counttable th{background:#eaf0f8;position:sticky;top:0}.counttable td:nth-child(4),.counttable td:nth-child(5){font-variant-numeric:tabular-nums}.countscroll.collapsed{display:none}@media(max-width:800px){.countmetrics{grid-template-columns:repeat(2,1fr)}.counttable{font-size:12px}}
-.coachlive{padding:12px;background:#eaf6f0;border-left:4px solid #17835b;border-radius:7px;line-height:1.65;font-size:14px}.coachlive .why{color:#3d576c;font-size:13px;margin-top:5px}.coachlive .shift{color:#b35c00;font-weight:700}.coachlive .caption{font-size:12px;color:#4a6172;margin-top:8px}.coachlive .countbig{font-size:18px;font-weight:750}.coachlive .sample{background:#fff4d9;border-radius:5px;padding:5px 7px;margin-top:7px}#coachScenario{padding:6px;border:1px solid #b8c7d5;border-radius:6px}</style></head><body><main class="wrap"><header><h1>21點互動策略教練 <span style="font-size:13px;color:#4c748f">V8.0</span></h1><p>真實牌靴抽牌模擬 · 實際操作分牌／加倍 · 對照表自動框選 · Hi-Lo 算牌 · 全部虛擬籌碼</p></header><section class="stats"><div class="stat"><small>虛擬籌碼</small><strong id="bank">1,000</strong></div><div class="stat"><small>策略正確率</small><strong id="accuracy">—</strong></div><div class="stat"><small>累積計數</small><strong id="running">0</strong></div><div class="stat"><small>真實計數（估算）</small><strong id="truecount">0.0</strong></div><div class="stat"><small>完成局數 / 勝手</small><strong id="rounds">0 / 0</strong></div></section><section class="panel countboard" aria-label="Hi-Lo 算牌儀表板">
+.coachreason{margin-top:10px;background:#fff;border:1px solid #cddfda;border-radius:8px;padding:10px}.coachreason strong{color:#164e43}.coachreason p{margin:4px 0 8px}.coachreason .example{background:#f3f7fd;border-radius:6px;padding:7px;margin:7px 0}.coachlive{padding:12px;background:#eaf6f0;border-left:4px solid #17835b;border-radius:7px;line-height:1.65;font-size:14px}.coachlive .why{color:#3d576c;font-size:13px;margin-top:5px}.coachlive .shift{color:#b35c00;font-weight:700}.coachlive .caption{font-size:12px;color:#4a6172;margin-top:8px}.coachlive .countbig{font-size:18px;font-weight:750}.coachlive .sample{background:#fff4d9;border-radius:5px;padding:5px 7px;margin-top:7px}#coachScenario{padding:6px;border:1px solid #b8c7d5;border-radius:6px}.coachprob{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0}.coachprob>div{background:#edf5f7;border-radius:7px;padding:9px;font-size:12px}.coachprob b{display:block;font-size:22px;margin:3px 0;color:#19547b}.coachprob small{font-size:11px;color:#4c6272}.coachcards{margin:12px 0}.coachcards summary{cursor:pointer;color:#21628a;font-weight:650}.coachcards table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}.coachcards th,.coachcards td{border-bottom:1px solid #dbe3e9;padding:5px;text-align:left}.evcompare{margin:12px 0;display:grid;gap:5px}.evcompare>div{display:flex;justify-content:space-between;gap:10px;background:#f0f4f9;padding:8px;border-radius:6px;font-size:12px}.evcompare b{white-space:nowrap;font-size:14px}@media(max-width:450px){.coachprob{grid-template-columns:1fr}}
+
+/* V12：醒目建議與簡短條列式機率重點 */
+.coach-action{display:flex;align-items:center;justify-content:space-between;gap:10px;border-radius:10px;padding:15px 16px;margin:10px 0 12px;border:2px solid transparent}
+.coach-action .action-label{font-size:14px;font-weight:800;letter-spacing:.04em}
+.coach-action .action-name{font-size:34px;font-weight:900;line-height:1.2;letter-spacing:.05em}
+.coach-action .action-note{font-size:12px;font-weight:600;opacity:.88;text-align:right;max-width:125px}
+.coach-action.action-S{background:#d8f2df;border-color:#13834d;color:#07582b}
+.coach-action.action-H{background:#dceefa;border-color:#1874b4;color:#13517e}
+.coach-action.action-D{background:#fff0c7;border-color:#aa6d00;color:#734900}
+.coach-action.action-P{background:#e7dffd;border-color:#6a41b1;color:#522c8d}
+.coach-info{font-size:14px;color:#30475a;line-height:1.65;margin-top:2px}
+.coach-labeled{font-weight:800;color:#164e43;margin:8px 0 4px}
+.coach-derivation{background:#f6f9fc;border:1px solid #d6e1eb;border-radius:9px;padding:12px;margin:12px 0;font-size:13px;line-height:1.7}
+.coach-derivation summary{cursor:pointer;font-weight:850;color:#154e75;font-size:14px}
+.coach-equation{font-size:14px;background:#e6f3ea;border-left:4px solid #188354;padding:10px;border-radius:6px;font-weight:800;margin:8px 0;overflow-wrap:anywhere}
+.coach-derivation table{border-collapse:collapse;width:100%;font-size:12px;margin:10px 0;min-width:480px}
+.coach-derivation th,.coach-derivation td{border-bottom:1px solid #d8e2e9;padding:7px 5px;text-align:right;white-space:nowrap}
+.coach-derivation th:first-child,.coach-derivation td:first-child{text-align:left}
+.coach-derivation th{background:#e3eef5;color:#294e69}
+.coach-derivation .scroll{overflow-x:auto}
+.coach-micro{font-size:12px;color:#486277;margin-top:8px;line-height:1.5}
+@media(max-width:540px){.coach-action .action-name{font-size:27px}.coach-action{padding:11px}}
+
+/* V12 精簡教練：一眼查看「原因／風險／期望值」，推導按需展開 */
+.coach-points{margin:9px 0 6px;padding-left:20px;line-height:1.48;font-size:13px;color:#20394a}
+.coach-points li{margin:5px 0;padding-left:1px}
+.coach-points b{color:#124e42}
+.coachreason{padding:10px 11px;margin-top:7px}
+.coach-detail{margin-top:8px;padding:8px 9px;border:1px solid #d6e1eb;border-radius:7px;font-size:12px;background:#f6f9fc}
+.coach-detail summary{cursor:pointer;font-weight:750;color:#23577a}
+.coach-detail p{margin:6px 0}
+.coach-action{margin:6px 0 8px;padding:11px 13px}
+.coach-action .action-name{font-size:36px}
+.coach-info{font-size:12px;line-height:1.4;color:#516779}
+.coachreason .coach-micro{font-size:11px}
+
+/* V13：樹狀機率圖，無外部依賴，手機自動換行 */
+.probtree{border:1px solid #dbe5ed;border-radius:12px;background:#fbfdff;padding:12px 10px;margin:10px 0 12px;overflow:hidden}
+.probtree h3{font-size:14px;margin:0 0 10px;color:#264b63;font-weight:850}
+.probtree-root{display:table;margin:0 auto;background:#173f59;color:#fff;border:1px solid #173f59;border-radius:8px;padding:8px 13px;text-align:center;font-size:14px;font-weight:850;max-width:100%}
+.probtree-stem{height:16px;width:2px;background:#9fb2c2;margin:0 auto}
+.probtree-leaves{position:relative;display:grid;gap:7px;padding-top:17px}
+.probtree-leaves.tree-three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.probtree-leaves.tree-two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.probtree-leaves:before{content:"";position:absolute;border-top:2px solid #9fb2c2;top:0;left:16.7%;right:16.7%}
+.probtree-leaves.tree-two:before{left:25%;right:25%}
+.probtree-leaf{position:relative;border:1px solid #b8c9d6;border-radius:10px;padding:11px 5px;display:flex;flex-direction:column;gap:5px;text-align:center;min-width:0;min-height:98px;align-items:center}
+.probtree-leaf:before{content:"";position:absolute;height:17px;width:2px;background:#9fb2c2;left:50%;bottom:100%}
+.probtree-leaf strong{font-size:13px;font-weight:850}
+.probtree-leaf .prob-number{font-size:clamp(16px,2.2vw,25px);line-height:1.12;font-weight:900;font-variant-numeric:tabular-nums}
+.probtree-leaf .prob-detail{font-size:11px;line-height:1.4;overflow-wrap:anywhere}
+.probtree-leaf .prob-combos{font-size:11px;opacity:.85;line-height:1.35;overflow-wrap:anywhere}
+.probtree-leaf.loss{background:#fde7e7;color:#a3202a;border-color:#e6adb1}
+.probtree-leaf.safe{background:#e4eefb;color:#234f7e;border-color:#bbd2ee}
+.probtree-leaf.win{background:#dcf5e5;color:#18603d;border-color:#a6ddbb}
+.probtree-foot{margin-top:9px;font-size:11px;color:#496477;line-height:1.5}
+.probtree small{font-size:11px}
+.probtree-split{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.probtree-split .probbar{height:10px;background:#d9e2e9;border-radius:6px;overflow:hidden;display:flex;grid-column:1/-1}
+.probtree-split .probbar span{display:block;height:100%}
+@media(max-width:480px){.probtree{padding:10px 6px}.probtree-leaves{gap:4px}.probtree-leaf{padding:9px 3px}.probtree-leaf strong{font-size:12px}.probtree-leaf .prob-detail{font-size:10px}}
+
+/* V14: 期望值計算與莊家底牌分支樹 */
+#dealerPathPanel{margin-top:13px}
+#dealerDetailedPanel .dealer-paths{margin-top:0}
+.path-jump{display:block;background:#eaf2fa;border-radius:7px;padding:9px;margin-top:12px;font-size:12px;font-weight:700;text-decoration:none;color:#16628c}
+.path-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}.path-summary>div{padding:9px;border-radius:7px;text-align:center;background:#e9f1f8}.path-summary b{display:block;font-size:18px}.path-summary small{font-size:11px;color:#48687d}
+@media(max-width:700px){.holegrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ev-lesson{margin-top:13px;background:#fff}
+.ev-method{font-size:12px;color:#526879;line-height:1.5;margin-top:8px}
+.ev-hero{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0}
+.ev-hero>div{border-radius:9px;background:#eff4fa;padding:10px}
+.ev-hero b{display:block;color:#19435b;font-size:12px}
+.ev-hero strong{display:block;font-size:21px;margin-top:2px;font-variant-numeric:tabular-nums}
+.ev-hero .best{background:#daf3e6;border:2px solid #258d64}
+.ev-step{margin:12px 0;padding:11px;border:1px solid #d9e3ec;border-radius:8px;background:#fafcfe}
+.ev-step h3{font-size:14px;margin:0 0 7px;color:#244e6b}
+.ev-formula{background:#e7f4ec;border-left:3px solid #23865c;padding:8px 10px;font-weight:700;font-size:13px;border-radius:5px;line-height:1.6;overflow-wrap:anywhere}
+.ev-scroll{overflow-x:auto}
+.ev-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px;min-width:390px}
+.ev-table th,.ev-table td{border-bottom:1px solid #dee7ef;padding:6px 5px;text-align:right;font-variant-numeric:tabular-nums}
+.ev-table th:first-child,.ev-table td:first-child{text-align:left}
+.ev-table th{background:#eaf0f7}
+.ev-mini{font-size:12px;color:#435d70;line-height:1.5}
+.dealer-paths{margin-top:15px;background:#f9fbfe;border:1px solid #ccdde9;border-radius:10px;padding:10px}
+.dealer-paths h4{margin:3px 0 5px;font-size:15px;color:#164b6c}
+.dealer-paths .path-root{background:#244f73;color:#fff;text-align:center;font-weight:800;padding:9px 8px;border-radius:8px;font-size:14px}
+.dealer-paths .path-down{height:15px;width:2px;background:#aac1d1;margin:0 auto;position:relative}
+.dealer-paths .path-down:after{content:'▼';position:absolute;left:-6px;bottom:-9px;font-size:10px;color:#729ab0}
+.holegrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px;align-items:start}
+.hole-card{background:#fff;border:1px solid #c9dce8;border-radius:9px;overflow:hidden;min-width:0}
+.hole-card.prominent{border:2px solid #e3a03a;grid-column:1/-1}
+.hole-card summary{list-style:none;cursor:pointer;padding:9px;display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap}
+.hole-card summary::-webkit-details-marker{display:none}
+.hole-card summary:after{content:'展開';font-size:11px;color:#4d7c9a;margin-left:auto}
+.hole-card[open] summary:after{content:'收起'}
+.hole-card summary .hole-name{font-size:13px;font-weight:800;color:#234a67}
+.hole-card summary .hole-prob{font-weight:800;color:#13664e;font-size:13px}
+.hole-card summary .hole-state{color:#5b6d7b;font-size:11px;width:100%}
+.hole-inside{border-top:1px solid #dae6ee;padding:9px}
+.hole-final{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px}
+.hole-final span{background:#eef4f9;border-radius:5px;font-size:11px;padding:4px 5px}
+.hole-final span.busted{background:#fbe5e5;color:#a02735}
+.hole-final span.won{background:#dbf3e2;color:#126b3d}
+.hole-final span.tied{background:#fff1d5;color:#846007}
+.hole-final span.lost{background:#e3effc;color:#185b8b}
+.next-root{font-size:12px;padding:7px;background:#edf4f9;border-radius:5px;text-align:center;font-weight:700;color:#29506c}
+.next-leaves{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:6px;margin-top:9px}
+.next-card{background:#f2f6fa;border:1px solid #d9e5ed;border-radius:7px;padding:7px;font-size:11px;min-height:74px}
+.next-card strong{font-size:13px;display:block;color:#233e51}
+.next-card span{display:block;font-weight:700;color:#37617f;margin:3px 0}
+.next-card em{display:block;font-style:normal;color:#4b6170;line-height:1.35}
+.next-card.bad{background:#ffebeb;border-color:#f1c3c3}
+.next-card.good{background:#e3f6eb;border-color:#b9e4cb}
+.next-card.drawmore{background:#fff6df;border-color:#eed49a}
+.path-basis{margin-top:9px;color:#526c7c;font-size:11px;line-height:1.55}
+@media(max-width:580px){.holegrid{grid-template-columns:1fr}.ev-hero strong{font-size:18px}.dealer-paths{padding:8px}.next-leaves{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* V15：期望值每一步全部顯示，可直接逐行驗算 */
+.ev-lesson{font-size:14px}
+.ev-options{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 9px}
+.ev-options button{background:#e7edf5;color:#214c70;padding:7px 11px;font-size:12px;border-radius:7px}
+.ev-options button.sel{background:#176d9b;color:#fff}
+.ev-options button:disabled{opacity:.4}
+.ev-context{margin:7px 0 10px;font-size:13px;color:#314b60}
+.ev-verdict{background:#fff4d9;border-left:4px solid #d0a134;padding:12px;border-radius:7px;line-height:1.55;font-size:13px}
+.ev-flow{background:#edf4fa;border-radius:7px;padding:9px;margin:7px 0 10px;font-size:12px;color:#315879;line-height:1.5}
+.ev-breakdown{border-collapse:collapse;width:100%;font-size:12px;font-variant-numeric:tabular-nums;margin:9px 0}
+.ev-breakdown th,.ev-breakdown td{padding:8px 6px;border-bottom:1px solid #dce6ec;text-align:right;white-space:normal}
+.ev-breakdown th:first-child,.ev-breakdown td:first-child{text-align:left}
+.ev-breakdown th{background:#e6eef5;color:#254e68}
+.ev-breakdown tr.ev-sum{font-weight:850;background:#e2f3e9;color:#125c38}
+.ev-breakdown.hit{min-width:530px}
+.ev-breakdown.hit td:nth-child(2){white-space:nowrap}
+.ev-breakdown.hit td:nth-child(3){text-align:center;max-width:140px}
+.ev-calc{background:#e8f4eb;padding:11px;border-radius:8px;font-size:13px;line-height:1.8;color:#1b3d32}
+.ev-calc>b{display:block;margin-bottom:5px;color:#15452e}
+.ev-result{border-top:1px solid #b9d8c4;padding-top:7px;margin-top:6px;font-size:15px;font-weight:750}
+.ev-arithmetic{overflow-wrap:anywhere;line-height:1.7;margin:5px 0}
+.ev-total{display:flex;flex-direction:column;gap:3px;margin-top:6px}
+.ev-optional{margin-top:10px;padding:7px 9px;background:#f2f6fa;border-radius:7px;color:#38566e;font-size:12px}
+.ev-optional summary{cursor:pointer;font-weight:700}
+.ev-optional p{line-height:1.6}
+@media(max-width:600px){.ev-hero strong{font-size:18px}.ev-step{padding:8px}.ev-calc{font-size:12px}}
+
+/* V16：在即時教練內直接顯示莊家爆牌機率加權計算與底牌分支 */
+.dealer-math{margin:12px 0;border:1px solid #b8d4c6;background:#f7fcfa;border-radius:12px;padding:12px 10px;line-height:1.5}
+.dealer-math h3{font-size:16px;color:#124f3d;margin:0 0 10px}
+.dealer-math-steps{display:flex;gap:5px;align-items:center;justify-content:center;flex-wrap:wrap;font-size:11px;font-weight:750;color:#294f54}
+.dealer-math-steps span:nth-child(odd){background:#e5f0ee;border-radius:7px;padding:6px}
+.dealer-math-result{background:#e5f5e8;border:1px solid #b6dbc1;border-radius:8px;padding:10px;margin-top:10px;color:#23523e}
+.dealer-math-result strong{color:#0f7445;font-size:24px;margin-left:6px}
+.dealer-math-mini{color:#506779;font-size:12px;margin:7px 0}
+.dealer-math .scroll{overflow-x:auto}
+.dealer-math-table,.dealer-step-table{border-collapse:collapse;width:100%;font-size:12px;min-width:515px;font-variant-numeric:tabular-nums}
+.dealer-math-table th,.dealer-math-table td,.dealer-step-table th,.dealer-step-table td{border-bottom:1px solid #d3e2df;padding:7px 5px;text-align:right;vertical-align:top}
+.dealer-math-table th:first-child,.dealer-math-table td:first-child,.dealer-step-table th:first-child,.dealer-step-table td:first-child{text-align:left}
+.dealer-math-table th,.dealer-step-table th{background:#e5efef;color:#285057}
+.dealer-math-total{background:#d6eee0;color:#135c3b}
+.dealer-branch-sum{background:#e9f5ed;padding:9px;margin:9px 0 2px;font-size:12px;border-radius:7px;overflow-wrap:anywhere}
+.dealer-branch-sum strong{color:#0e744b}
+.dealer-branch-sum.alt{background:#edf2fa}
+.dealer-math-drill{margin-top:11px}.dealer-math-drill>summary{cursor:pointer;font-size:14px;padding:6px;background:#e6eee9;border-radius:6px;color:#165f43}
+.dealer-hole-list{display:grid;gap:7px;margin:8px 0}
+.dealer-hole-detail{background:white;border:1px solid #cedfdc;border-radius:8px;overflow:hidden}
+.dealer-hole-detail>summary{cursor:pointer;font-size:13px;padding:9px;color:#204c5b}
+.dealer-hole-detail[open]>summary{background:#f0f7f4;font-weight:750}
+.hole-content{padding:6px 10px 10px;font-size:12px}
+.dealer-step-root{padding:9px;border-radius:7px;background:#204c5b;color:#fff;font-weight:800;text-align:center}
+.dealer-step-arrow{text-align:center;font-weight:750;color:#426b73;padding:6px}
+@media(max-width:480px){.dealer-math{padding:9px 6px}.dealer-math-result strong{font-size:21px}}
+</style></head><body><main class="wrap"><header><h1>21點互動策略教練 <span style="font-size:13px;color:#4c748f">V16.0</span></h1><p>真實牌靴抽牌模擬 · 實際操作分牌／加倍 · 對照表自動框選 · Hi-Lo 算牌 · 全部虛擬籌碼</p></header><section class="stats"><div class="stat"><small>虛擬籌碼</small><strong id="bank">1,000</strong></div><div class="stat"><small>策略正確率</small><strong id="accuracy">—</strong></div><div class="stat"><small>累積計數</small><strong id="running">0</strong></div><div class="stat"><small>真實計數（估算）</small><strong id="truecount">0.0</strong></div><div class="stat"><small>完成局數 / 勝手</small><strong id="rounds">0 / 0</strong></div></section><section class="panel countboard" aria-label="Hi-Lo 算牌儀表板">
  <div class="counthead"><h2>算牌速查｜Hi-Lo</h2><span id="countStatus">尚未發牌</span></div>
  <div class="countmetrics">
   <div><small>本局公開計數變化</small><strong id="roundCount">+0</strong></div>
@@ -9,13 +181,11 @@
   <div><small>剩餘牌數／副數</small><strong id="deckRemaining">312 張 / 6.00 副</strong></div>
   <div><small>真實計數</small><strong id="countTrue">0.00</strong></div>
  </div>
- <div class="countformula" id="countFormula">剩餘牌數 = 6 × 52 − 已抽出牌數 = 312 − 0 = 312 張</div>
- <p class="muted countinfo"><b>本局變化</b>＝本局公開的 +1、0、−1 加總；<b>累積計數</b>＝本牌靴自洗牌以來已公開的牌總和；<b>真實計數</b>＝累積計數換算成每一副剩餘牌的強度。<br>真實計數 = 已公開牌的累積計數 ÷ (剩餘牌數 ÷ 52)。尚未翻開的莊家底牌不計分，但已從牌靴扣除。<br><b>2～6：+1　 7～9：0　 10／J／Q／K／A：−1</b></p>
- <p class="muted" id="countFootnote">本牌靴數值會跨局保留，重新洗牌歸零。</p>
-</section><section class="layout"><div><div class="felt"><div class="small">莊家｜六副牌｜軟17停牌｜美式底牌檢查</div><div class="cards" id="dealerCards"></div><div id="dealerScore">尚未發牌</div><hr><div class="small">你的手牌（黃色框為目前操作的手牌）</div><div class="hands" id="hands"><span>開始發牌後顯示</span></div><div class="btns"><button class="green" id="deal">開始發牌</button><button id="hit" disabled>補牌</button><button id="stand" disabled>停牌</button><button class="gold" id="double" disabled>加倍</button><button class="purple" id="split" disabled>分牌</button></div></div><div class="panel wide"><div class="setting"><label>虛擬每手下注 <select id="bet"><option>10</option><option>20</option><option>50</option><option>100</option></select></label><button class="secondary" id="hint">顯示策略建議</button><button class="secondary" id="reset">重新開始</button></div><p class="muted">規則：Blackjack 3:2、莊家軟17停牌（S17）、可分牌後加倍（DAS）、最多四手、A只可分一次且每手各補一張、無投降。未提供保險；賭場規則不同，策略也會不同。</p></div></div><aside class="panel"><h2>即時教練</h2><div class="coachlive" id="countCoach" aria-live="polite">發牌後顯示本局計數建議。</div><div class="setting" style="margin:10px 0"><label for="coachScenario">教學情境：</label><select id="coachScenario"><option value="live">實際真實計數</option><option value="2">假設 +2</option><option value="3">假設 +3</option><option value="-1">假設 −1</option></select></div><div id="message" class="note" aria-live="polite">按「開始發牌」立即看到你的兩張牌和莊家一張明牌，並可直接補牌或停牌；算牌數值隨公開的牌即時更新。</div><div class="tabbar" style="margin-top:14px"><button class="sel" data-tab="lesson">本局策略</button><button data-tab="count">算牌原理</button><button data-tab="record">訓練紀錄</button></div><div id="side" class="details"></div></aside></section><section class="panel wide strategy-section"><h2>基本策略總表（目前牌局自動框選）</h2><div class="legend"><span><b class="H">補</b> 補牌</span><span><b class="S">停</b> 停牌</span><span><b class="D">倍</b> 加倍，不能加倍則補牌（特定格另有說明）</span><span><b class="P">分</b> 分牌</span></div><div class="tabbar" id="strategyTabs"><button class="sel" data-strategy="hard">硬牌</button><button data-strategy="soft">軟牌</button><button data-strategy="pair">對子</button></div><div class="tablewrap"><table class="matrix" id="strategyTable"></table></div><p class="muted" id="strategyExplanation"></p></section><section class="panel wide"><h2>學習路線</h2><p class="details">第一步：看三張明牌心算 Hi-Lo，直接選擇補牌或停牌；練習補牌與停牌 → 第二步：學加倍與分牌 → 第三步：根據黃色框查策略 → 第四步：遮住建議自行判斷 → 第五步：理解累積計數與真實計數。策略正確率與每局獲勝率是不同的指標。</p><p class="muted">本程式為教學用途。使用基本策略不等於長期正期望值；算牌也不保證獲利。此版為自製模擬，不是賭場認證引擎。</p></section></main><script>
+
+</section><section class="layout"><div><div class="felt"><div class="small">莊家｜六副牌｜軟17停牌｜美式底牌檢查</div><div class="cards" id="dealerCards"></div><div id="dealerScore">尚未發牌</div><hr><div class="small">你的手牌（黃色框為目前操作的手牌）</div><div class="hands" id="hands"><span>開始發牌後顯示</span></div><div class="btns"><button class="green" id="deal">開始發牌</button><button id="hit" disabled>補牌</button><button id="stand" disabled>停牌</button><button class="gold" id="double" disabled>加倍</button><button class="purple" id="split" disabled>分牌</button></div></div><section class="panel wide ev-lesson" aria-label="本局期望值計算"><h2>本局期望值怎麼計算？</h2><div id="evWalkthrough" aria-live="polite"><p class="muted">發牌後會列出停牌和補牌的計算步驟、每種結果及加權期望值。</p></div></section></div><aside class="panel"><h2>即時教練｜分支機率圖</h2><div class="coachlive" id="countCoach" aria-live="polite">發牌後顯示本局計數建議。</div><div class="setting" style="margin:10px 0"><label for="coachScenario">教學情境：</label><select id="coachScenario"><option value="live">實際真實計數</option><option value="2">假設 +2</option><option value="3">假設 +3</option><option value="-1">假設 −1</option></select></div><div id="message" class="note" aria-live="polite">按「開始發牌」立即看到你的兩張牌和莊家一張明牌，並可直接補牌或停牌；算牌數值隨公開的牌即時更新。</div><div class="tabbar" style="margin-top:14px"><button class="sel" data-tab="lesson">本局策略</button><button data-tab="count">算牌原理</button><button data-tab="record">訓練紀錄</button></div><div id="side" class="details"></div></aside></section><section class="panel wide" id="dealerPathPanel"><div id="dealerDetailedPanel"><p class="muted">發牌後，這裡會列出莊家可能的底牌、後續抽牌與最終點數。</p></div></section><section class="panel wide strategy-section"><h2>基本策略總表（目前牌局自動框選）</h2><div class="legend"><span><b class="H">補</b> 補牌</span><span><b class="S">停</b> 停牌</span><span><b class="D">倍</b> 加倍，不能加倍則補牌（特定格另有說明）</span><span><b class="P">分</b> 分牌</span></div><div class="tabbar" id="strategyTabs"><button class="sel" data-strategy="hard">硬牌</button><button data-strategy="soft">軟牌</button><button data-strategy="pair">對子</button></div><div class="tablewrap"><table class="matrix" id="strategyTable"></table></div><p class="muted" id="strategyExplanation"></p></section><section class="panel wide"><h2>學習路線</h2><p class="details">第一步：看三張明牌心算 Hi-Lo，直接選擇補牌或停牌；練習補牌與停牌 → 第二步：學加倍與分牌 → 第三步：根據黃色框查策略 → 第四步：遮住建議自行判斷 → 第五步：理解累積計數與真實計數。策略正確率與每局獲勝率是不同的指標。</p><p class="muted">本程式為教學用途。使用基本策略不等於長期正期望值；算牌也不保證獲利。此版為自製模擬，不是賭場認證引擎。</p></section></main><script>
 (()=>{'use strict';
 const $=id=>document.getElementById(id);const RANKS=['A','2','3','4','5','6','7','8','9','10','J','Q','K'],SUITS=['♠','♥','♦','♣'];const NAMES={H:'補牌',S:'停牌',D:'加倍',P:'分牌'};
-const upcols=['2','3','4','5','6','7','8','9','10','A'];let bank=1000,shoe=[],runCount=0,round=null,played=0,correct=0,rounds=0,wins=0,log=[],tab='lesson',stratTab='hard',hinted=false,countLedger=[];
+const upcols=['2','3','4','5','6','7','8','9','10','A'];let bank=1000,shoe=[],runCount=0,round=null,played=0,correct=0,rounds=0,wins=0,log=[],tab='lesson',stratTab='hard',hinted=false,countLedger=[],evMode='demo14';
 const value=c=>c.r==='A'?11:['10','J','Q','K'].includes(c.r)?10:Number(c.r);const same=(a,b)=>value(a)===value(b);
 function score(cards){let sum=cards.reduce((x,c)=>x+value(c),0),aces=cards.filter(c=>c.r==='A').length;while(sum>21&&aces){sum-=10;aces--}return {total:sum,soft:aces>0};}
 function shuffle(){shoe=[];for(let d=0;d<6;d++)for(const r of RANKS)for(const s of SUITS)shoe.push({r,s});for(let i=shoe.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[shoe[i],shoe[j]]=[shoe[j],shoe[i]]}runCount=0;countLedger=[];}
@@ -79,28 +249,390 @@ function indexedAdvice(hand,tc){
  const actual=target==='D'&&!canDouble(hand)?'H':target;
  return {base,chosen:{a:actual,why:item.why},changed:actual!==base.a,why:item.why,threshold:item.t,unavailable:target==='D'&&actual!=='D'};
 }
+// 教學機率：已知公開牌，尚未揭示莊家底牌視為未知。
+// 為避免完整有限牌靴的昂貴遞迴，玩家/莊家「後續」抽牌採固定當前剩餘比例（有放回近似）。
+// 下一張的抽牌類型與張數則使用當下未公開牌（牌靴 + 一張隱藏底牌）的真實數量。
+const DEALER_KEYS=['17','18','19','20','21','bust'];
+function probabilityModel(hand, options=null){
+  const unknown=options?.example ? RANKS.flatMap(r=>Array.from({length:4},()=>({r,s:'♠'}))) : shoe.slice();
+  if(!options?.example&&round&&!round.revealed&&round.dealer[1])unknown.push(round.dealer[1]);
+  const rankCounts={};for(const r of RANKS)rankCounts[r]=0;
+  for(const c of unknown)rankCounts[c.r]++;
+  const n=unknown.length;
+  if(!n)return null;
+  const ranks=RANKS.map(r=>({r,n:rankCounts[r],p:rankCounts[r]/n,val:r==='A'?11:['10','J','Q','K'].includes(r)?10:Number(r)})).filter(x=>x.n>0);
+  const up=options?.example ? options.up : value(round.dealer[0]);
+  function addState(state,val){
+    let total=state.total+val,soft=state.soft+(val===11?1:0);
+    while(total>21&&soft){total-=10;soft--}
+    return {total,soft};
+  }
+  const memo=new Map();
+  function dealerRun(state){
+    if(state.total>21)return {'17':0,'18':0,'19':0,'20':0,'21':0,bust:1};
+    if(state.total>=17){const result={'17':0,'18':0,'19':0,'20':0,'21':0,bust:0};result[String(state.total)]=1;return result;}
+    const key=state.total+'|'+state.soft;
+    if(memo.has(key))return memo.get(key);
+    const result={'17':0,'18':0,'19':0,'20':0,'21':0,bust:0};
+    for(const x of ranks){const t=dealerRun(addState(state,x.val));for(const k of DEALER_KEYS)result[k]+=x.p*t[k];}
+    memo.set(key,result);return result;
+  }
+  // 美國底牌檢查後，遊戲進入玩家決策代表莊家起手沒有天然 Blackjack。
+  let holes=ranks.filter(x=>!(up===10&&x.val===11)&&!(up===11&&x.val===10));
+  let den=holes.reduce((a,x)=>a+x.n,0);
+  if(den===0){holes=ranks;den=n;}
+  const dealerDist={'17':0,'18':0,'19':0,'20':0,'21':0,bust:0};
+  const dealerHoleSteps=[];
+  for(const x of holes){
+    const initial=addState({total:up,soft:up===11?1:0},x.val);
+    const d=dealerRun(initial);
+    const weight=x.n/den;
+    const firstDraws=initial.total>=17?[]:ranks.map(y=>{const next=addState(initial,y.val);const dist=dealerRun(next);return{r:y.r,n:y.n,p:y.p,total:next.total,soft:next.soft>0,done:next.total>=17,dist};});
+    dealerHoleSteps.push({r:x.r,n:x.n,initial:initial.total,soft:initial.soft>0,bust:d.bust,weight,contribution:weight*d.bust,dist:d,firstDraws});
+    for(const k of DEALER_KEYS)dealerDist[k]+=weight*d[k];
+  }
+  function standEV(total){if(total>21)return -1;let ev=dealerDist.bust;for(let d=17;d<=21;d++){const p=dealerDist[String(d)];ev+=p*(total>d?1:total<d?-1:0)}return ev;}
+  const pmemo=new Map();
+  function hitEV(state){let ev=0;for(const x of ranks){const s=addState(state,x.val);ev+=x.p*(s.total>21?-1:optimalEV(s));}return ev;}
+  function optimalEV(state){if(state.total>21)return -1;if(state.total===21)return standEV(21);const key=state.total+'|'+state.soft;if(pmemo.has(key))return pmemo.get(key);const ev=Math.max(standEV(state.total),hitEV(state));pmemo.set(key,ev);return ev;}
+  const state={total:score(hand.cards).total,soft:score(hand.cards).soft?1:0};
+  const breakdown=ranks.map(x=>{const ns=addState(state,x.val);return {...x,next:ns.total,bust:ns.total>21,twentyone:ns.total===21}});
+  const bust=breakdown.filter(x=>x.bust).reduce((a,x)=>a+x.n,0);
+  const twentyone=breakdown.filter(x=>x.twentyone).reduce((a,x)=>a+x.n,0);
+  const hitSteps=ranks.map(x=>{const next=addState(state,x.val);const after=next.total>21?-1:optimalEV(next);return{r:x.r,n:x.n,p:x.p,next:next.total,bust:next.total>21,after,contribution:x.p*after};});
+  return {n,ranks,breakdown,bust,twentyone,dealerDist,dealerHoleSteps,dealerHoleDen:den,evStand:standEV(state.total),evHit:hitEV(state),hitSteps};
+}
+function dealerBustExplanation(model,up){
+ const pct=x=>(x*100).toFixed(2)+'%';
+ const fmt=x=>(x*100).toFixed(2);
+ const nameOf=r=>['10','J','Q','K'].includes(r)?'10／J／Q／K':r;
+ const combined=[];
+ for(const x of model.dealerHoleSteps){
+  const name=nameOf(x.r);
+  let g=combined.find(v=>v.name===name);
+  if(!g){g={name,n:0,initial:x.initial,soft:x.soft,bustNumerator:0,contribution:0,draws:x.firstDraws};combined.push(g)}
+  g.n+=x.n;
+  g.bustNumerator+=x.n*x.bust;
+  g.contribution+=x.contribution;
+ }
+ combined.sort((a,b)=>a.name==='10／J／Q／K'?-1:b.name==='10／J／Q／K'?1:a.name==='A'?1:b.name==='A'?-1:Number(a.name)-Number(b.name));
+ const rows=combined.map(g=>{
+  const probability=g.n/model.dealerHoleDen;
+  const conditional=g.bustNumerator/g.n;
+  return `<tr><td><b>${g.name}</b></td><td>${g.n} ÷ ${model.dealerHoleDen} = ${pct(probability)}</td><td>${g.soft?'軟':''}${g.initial} 點</td><td>${pct(conditional)}</td><td><b>${pct(g.contribution)}</b></td></tr>`;
+ }).join('');
+ const total=combined.reduce((sum,g)=>sum+g.contribution,0);
+ const contributions=combined.map(g=>fmt(g.contribution)+'%').join(' + ');
+ const sorted=combined.map((g,i)=>{
+  const probability=g.n/model.dealerHoleDen;
+  const conditional=g.bustNumerator/g.n;
+  const stop=g.initial>=17;
+  const bustNow=g.draws.filter(x=>x.total>21);
+  const stopNow=g.draws.filter(x=>x.total>=17&&x.total<=21);
+  const goOn=g.draws.filter(x=>x.total<17);
+  const p=xs=>xs.reduce((v,x)=>v+x.p,0);
+  const names=xs=>xs.map(x=>x.r).join('、')||'無';
+  const bustImmediate=p(bustNow);
+  const deeper=goOn.reduce((v,x)=>v+x.p*x.dist.bust,0);
+  const lines=[];
+  if(stop){
+    lines.push(`<tr><td>不用補牌</td><td>100%</td><td>已達 ${g.initial} 點</td><td>0%</td></tr>`);
+  }else{
+    if(bustNow.length)lines.push(`<tr><td>${names(bustNow)}</td><td>${pct(bustImmediate)}（${bustNow.reduce((t,x)=>t+x.n,0)}/${model.n} 張）</td><td>立即爆牌</td><td><b>${pct(bustImmediate)}</b></td></tr>`);
+    if(stopNow.length)lines.push(`<tr><td>${names(stopNow)}</td><td>${pct(p(stopNow))}（${stopNow.reduce((t,x)=>t+x.n,0)}/${model.n} 張）</td><td>到 17～21 點，停牌</td><td>0%</td></tr>`);
+    for(const x of goOn){
+      lines.push(`<tr><td>${x.r}</td><td>${pct(x.p)}（${x.n}/${model.n} 張）</td><td>變成 ${x.total} 點，還要補；之後爆牌 ${pct(x.dist.bust)}</td><td>${pct(x.p)} × ${pct(x.dist.bust)} = <b>${pct(x.p*x.dist.bust)}</b></td></tr>`);
+    }
+  }
+  const expression=stop?'已達停牌點數 → 爆牌率 0%':`${pct(bustImmediate)}（下一張立即爆牌） + ${goOn.map(x=>`${pct(x.p)} × ${pct(x.dist.bust)}`).join(' + ')||'0%（後續補牌）'} = ${pct(conditional)}`;
+  const open=g.name==='10／J／Q／K'?' open':'';
+  return `<details class="dealer-hole-detail"${open}>
+   <summary>底牌 <b>${g.name}</b>：${label(up)} + ${g.name} → ${g.initial} 點｜此底牌下爆牌 ${pct(conditional)}</summary>
+   <div class="hole-content">
+    <p><b>已知莊家 ${label(up)} + ${g.name}：</b>${stop?'目前已達停牌點數，不再抽牌。':'莊家不足 17 點，需要繼續補牌。'}</p>
+    <div class="dealer-step-root">${label(up)} + ${g.name} = ${g.initial} 點</div>
+    <div class="dealer-step-arrow">↓ 再抽一張</div>
+    <div class="scroll"><table class="dealer-step-table"><thead><tr><th>下一張</th><th>機率（張數）</th><th>結果</th><th>對本底牌的爆牌率貢獻</th></tr></thead><tbody>${lines.join('')}</tbody></table></div>
+    <div class="dealer-branch-sum"><b>底牌 ${g.name} 的最終爆牌率：</b>${expression}</div>
+    <div class="dealer-branch-sum alt"><b>再算這張底牌對整體的貢獻：</b>${g.n} ÷ ${model.dealerHoleDen} × ${pct(conditional)} = <strong>${pct(g.contribution)}</strong></div>
+   </div>
+  </details>`;
+ }).join('');
+ return `<section class="dealer-math" aria-label="莊家爆牌計算過程">
+  <h3>莊家爆牌機率怎麼算？</h3>
+  <div class="dealer-math-steps"><span>① 猜底牌</span><span>→</span><span>② 算該底牌之後爆牌</span><span>→</span><span>③ 各路徑加權相加</span></div>
+  <div class="dealer-math-result">莊家明牌 <b>${label(up)}</b>：最終爆牌 <strong>${pct(total)}</strong></div>
+  <p class="dealer-math-mini">每一行都按「底牌機率 × 這張底牌下最終爆牌機率」計算，最後加總。</p>
+  <div class="scroll"><table class="dealer-math-table"><thead><tr><th>可能底牌</th><th>底牌機率</th><th>起手</th><th>該底牌下最後爆牌</th><th>加權貢獻</th></tr></thead>
+   <tbody>${rows}<tr class="dealer-math-total"><td colspan="4">全部路徑加總</td><td><b>${pct(total)}</b></td></tr></tbody></table></div>
+  <div class="dealer-branch-sum"><b>總爆牌率：</b>${contributions} = <strong>${pct(total)}</strong></div>
+  <details class="dealer-math-drill" open>
+   <summary><b>往下拆：每張底牌之後，抽到哪些牌會爆？</b></summary>
+   <p class="dealer-math-mini">先看 10／J／Q／K 的分支；也可以點其他底牌展開。每個「繼續補」的機率會乘上後續最終爆牌率。</p>
+   <div class="dealer-hole-list">${sorted}</div>
+  </details>
+  <p class="dealer-math-mini">以上顯示的是目前遊戲的<strong>固定剩餘牌面比例近似模型</strong>：底牌機率依尚未公開牌張數；後續補牌每次沿用同一比例（有放回近似）。不是精確逐張扣牌的有限六副牌機率；莊家軟 17 停牌。底牌機率也已依美式底牌檢查條件排除莊家起手 Blackjack。</p>
+ </section>`;
+}
+// V15：真正可讀的期望值逐項運算；示範為完整牌面比例，遊戲中採當下牌靴近似。
+function renderEvWalkthrough(){
+ const box=$('evWalkthrough');if(!box)return;
+ const liveHand=round?.phase==='player'?current():null;
+ const hasLive=!!liveHand;
+ if(evMode==='round'&&!hasLive)evMode='demo14';
+ const cases={demo14:{p:14,u:5,cards:[{r:'4',s:'♠'},{r:'10',s:'♥'}]},demo16:{p:16,u:7,cards:[{r:'10',s:'♠'},{r:'6',s:'♥'}]}};
+ const isDemo=evMode!=='round';
+ const example=cases[evMode]||cases.demo14;
+ const h=isDemo?{cards:example.cards}:liveHand;
+ const model=probabilityModel(h,isDemo?{example:true,up:example.u}:null);
+ if(!model){box.innerHTML='<p>剩餘牌數不足。</p>';return;}
+ const up=isDemo?example.u:value(round.dealer[0]);
+ const pTotal=score(h.cards).total;
+ const bet=100;
+ const fmtSigned=x=>(x>=0?'+':'−')+Math.abs(x).toFixed(2);
+ const fmtNum=x=>x.toFixed(2);
+ const pct=x=>(x*100).toFixed(2)+'%';
+ const term=x=>x>=0?'+'+x.toFixed(2):'−'+Math.abs(x).toFixed(2);
+ const dist=model.dealerDist;
+ let pWin=dist.bust,pPush=0,pLose=0;
+ for(let d=17;d<=21;d++){
+   const probability=dist[String(d)];
+   if(pTotal>d)pWin+=probability;
+   else if(pTotal===d)pPush+=probability;
+   else pLose+=probability;
+ }
+ const standWin=pWin*100,standLoss=-pLose*100,standTotal=standWin+standLoss;
+ const stRows=[
+   {name:'贏（含莊家爆牌）',p:pWin,pay:100,contribution:standWin},
+   {name:'和局',p:pPush,pay:0,contribution:0},
+   {name:'輸',p:pLose,pay:-100,contribution:standLoss}
+ ].map(r=>`<tr><td>${r.name}</td><td>${pct(r.p)}</td><td>${r.pay>0?'+':''}${r.pay}</td><td><b>${fmtSigned(r.contribution)}</b></td></tr>`).join('');
+ const rawDealerRows=DEALER_KEYS.map(k=>{
+  const pay=k==='bust'?100:pTotal>Number(k)?100:pTotal===Number(k)?0:-100;
+  return `<tr><td>${k==='bust'?'爆牌':k+' 點'}</td><td>${pct(dist[k])}</td><td>${pay>0?'+':''}${pay}</td><td>${fmtSigned(dist[k]*pay)}</td></tr>`;
+ }).join('');
+ const buckets=[];
+ for(const item of model.hitSteps){
+  const name=['10','J','Q','K'].includes(item.r)?'10／J／Q／K':item.r;
+  let bucket=buckets.find(x=>x.name===name);
+  if(!bucket){bucket={name,n:0,p:0,after:item.after,contribution:0,next:item.next,bust:item.bust};buckets.push(bucket)}
+  bucket.n+=item.n;bucket.p+=item.p;bucket.contribution+=item.contribution;
+ }
+ const hitRows=buckets.map((r,i)=>{
+  const later=r.after*100;
+  const val=r.contribution*100;
+  const next=r.bust?'爆牌 → 損失 100':r.next+' 點 → 後續最佳補／停';
+  return `<tr><td><b>${r.name}</b></td><td>${r.n}／${model.n} = ${pct(r.p)}</td><td>${next}</td><td>${fmtSigned(later)}</td><td><b>${fmtSigned(val)}</b></td></tr>`;
+ }).join('');
+ const immediateBust=buckets.filter(r=>r.bust).reduce((sum,r)=>sum+r.contribution*100,0);
+ const survived=buckets.filter(r=>!r.bust).reduce((sum,r)=>sum+r.contribution*100,0);
+ const evStand=model.evStand*100,evHit=model.evHit*100;
+ const better=evStand>=evHit?'停牌':'補牌';
+ const improvement=Math.abs(evStand-evHit);
+ // Demo numbers are from a fixed-ratio infinite deck; real-mode draws use the currently unseen card mix.
+ const modeButtons=`<div class="ev-options">
+ <button id="evDemo14" class="${evMode==='demo14'?'sel':''}">範例：14 對 5</button>
+ <button id="evDemo16" class="${evMode==='demo16'?'sel':''}">範例：16 對 7</button>
+ <button id="evLive" class="${evMode==='round'?'sel':''}" ${!hasLive?'disabled':''}>目前牌局</button>
+ </div>`;
+ box.innerHTML=`${modeButtons}
+ <p class="ev-context"><strong>${isDemo?'固定數學範例':'目前牌局'}</strong>：玩家硬牌 <b>${pTotal}</b>｜莊家明牌 <b>${label(up)}</b>｜每手下注 <b>100 虛擬元</b></p>
+ <div class="ev-hero"><div class="${evStand>=evHit?'best':''}"><b>① 停牌期望損益</b><strong>${fmtSigned(evStand)} 元</strong></div><div class="${evHit>evStand?'best':''}"><b>② 補牌期望損益</b><strong>${fmtSigned(evHit)} 元</strong></div></div>
+ <div class="ev-verdict">計算結論：<b>${better}</b> 較好，平均每下注 100 元可少虧／多賺 <b>${fmtNum(improvement)} 元</b>。（兩個值可能都為負）</div>
+ <div class="ev-step"><h3>① 停牌：先算莊家最後是贏、和、輸</h3>
+ <div class="ev-flow">莊家可能的最終點數 → 比較你的 ${pTotal} 點 → 勝負機率 × 該結果損益 → 加總</div>
+ <table class="ev-breakdown"><thead><tr><th>結果</th><th>機率</th><th>贏／輸 100 元</th><th>加權後</th></tr></thead><tbody>${stRows}</tbody></table>
+ <div class="ev-calc"><b>把機率乘上錢：</b>
+ <div>${pct(pWin)} × (+100) = <b>${fmtSigned(standWin)}</b></div>
+ <div>${pct(pPush)} × 0 = <b>0.00</b></div>
+ <div>${pct(pLose)} × (−100) = <b>${fmtSigned(standLoss)}</b></div>
+ <div class="ev-result">合計：${fmtSigned(standWin)} + (0.00) + (${fmtSigned(standLoss)}) = <b>${fmtSigned(evStand)} 元</b></div></div>
+ <details class="ev-optional"><summary>拆開莊家爆牌、17、18、19、20、21 點的機率與損益</summary><div class="ev-scroll"><table class="ev-breakdown"><thead><tr><th>莊家最後</th><th>機率</th><th>你的損益</th><th>加權貢獻</th></tr></thead><tbody>${rawDealerRows}</tbody></table></div></details></div>
+ <div class="ev-step"><h3>② 補牌：每一種下一張牌，都要計算後續結果</h3>
+ <div class="ev-flow">下一張牌機率 → 抽後點數 → 後續選擇補／停 → 平均損益 → 乘上抽中機率</div>
+ <p class="ev-mini">表格中「抽到後的期望損益」已包含後續的補牌／停牌決策，不是抽到該牌就確定贏多少。</p>
+ <div class="ev-scroll"><table class="ev-breakdown hit"><thead><tr><th>下一張</th><th>抽中機率</th><th>抽後狀態</th><th>該路徑後續平均損益</th><th>本列貢獻</th></tr></thead><tbody>${hitRows}<tr class="ev-sum"><td colspan="4">所有補牌結果加總</td><td>${fmtSigned(evHit)}</td></tr></tbody></table></div>
+ <div class="ev-calc"><b>所有牌面加權後：</b>
+ <div class="ev-arithmetic">${buckets.map(r=>`(${fmtSigned(r.contribution*100)})`).join(' + ')} = <b>${fmtSigned(evHit)} 元</b></div>
+ <div class="ev-total"><span>抽到不爆的各路徑貢獻：<b>${fmtSigned(survived)}</b></span><span>立即爆牌的各路徑貢獻：<b>${fmtSigned(immediateBust)}</b></span></div>
+ <div class="ev-result">補牌期望值：${fmtSigned(survived)} + (${fmtSigned(immediateBust)}) = <b>${fmtSigned(evHit)} 元</b></div></div>
+ <details class="ev-optional"><summary>為什麼「抽到 A、2……」的後續期望值不是固定 ±100？</summary><p>例如現在 14 點抽到 A，變成 15 點；還得依莊家最終點數比較輸贏。程式先算「15 點停牌」與「15 點繼續補牌」兩種期望值，挑比較高的一個，再乘上抽到 A 的機率。其他牌面也是同樣計算，從可能的最後結果逐層往回加總。</p><p>例如抽到 10 點牌，14 + 10 = 24 立即爆牌，該路徑後續期望值直接是 −100，不必再計算。</p></details>
+ </div>
+ <p class="ev-method">${isDemo?'範例使用 52 張等比例（10 點牌共 16 張）的固定比例／無限牌靴模型，方便逐項驗算。':'目前牌局按照已公開牌扣除後的未知牌面比例計算第一張，莊家與後續玩家補牌仍採固定比例近似。'}<br>本表只比較「停」與「補」；未包含加倍、分牌完整期望值。可能與上方依基本策略／算牌修正的建議不同。金額是大量同條件牌局的平均值，不是本局會輸贏的確定金額。</p>`;
+ $('evDemo14').onclick=()=>{evMode='demo14';renderEvWalkthrough()};
+ $('evDemo16').onclick=()=>{evMode='demo16';renderEvWalkthrough()};
+ $('evLive').onclick=()=>{if(hasLive){evMode='round';renderEvWalkthrough()}};
+}
+// 莊家：明牌 → 可能底牌 → 起手點數 → 第一張補牌 → 最終結果。
+// 每個分支權重均使用同一未知牌比例；未來補牌為有放回近似，不是實體有限牌靴精確機率。
+function dealerDetailedPaths(model,playerTotal,up){
+ const fmt=p=>(100*p).toFixed(1)+'%';
+ const outcome=(key)=>{
+  if(key==='bust')return {label:'爆牌（玩家贏）',cls:'busted'};
+  const d=Number(key);return d>playerTotal?{label:'莊家贏',cls:'lost'}:d===playerTotal?{label:'和局',cls:'tied'}:{label:'玩家贏',cls:'won'};
+ };
+ const groupRanks=(r)=>['10','J','Q','K'].includes(r)?'10 點（10/J/Q/K）':r;
+ const grouped=[];
+ for(const x of model.dealerHoleSteps){
+  const name=groupRanks(x.r);let g=grouped.find(y=>y.name===name);
+  if(!g){g={name,n:0,initial:x.initial,soft:x.soft,bust:0,dist:Object.fromEntries(DEALER_KEYS.map(k=>[k,0])),draws:[],weight:0};grouped.push(g);}
+  g.n+=x.n;g.weight+=x.weight;g.bust+=x.weight*x.bust;
+  for(const k of DEALER_KEYS)g.dist[k]+=x.weight*x.dist[k];
+  if(g.draws.length===0)g.draws=x.firstDraws.map(v=>({...v}));
+ }
+ const order=name=>name.startsWith('10 點')?-1:name==='A'?0:Number(name);
+ grouped.sort((a,b)=>order(a.name)-order(b.name));
+ const won=model.dealerDist.bust+['17','18','19','20','21'].reduce((sum,k)=>sum+(Number(k)<playerTotal?model.dealerDist[k]:0),0);
+ const tied=['17','18','19','20','21'].includes(String(playerTotal))?model.dealerDist[String(playerTotal)]:0;
+ const lost=Math.max(0,1-won-tied);
+ const holes=grouped.map(g=>{
+  const chance=g.n/model.dealerHoleDen;
+  const pctDist={};for(const k of DEALER_KEYS)pctDist[k]=g.weight>0?g.dist[k]/g.weight:0;
+  const stats=DEALER_KEYS.filter(k=>pctDist[k]>.0000001).map(k=>{
+    const o=outcome(k);return `<span class="${o.cls}">${k==='bust'?'爆牌':k+' 點'} ${fmt(pctDist[k])} · ${o.label}</span>`;
+  }).join('');
+  const finishNow=g.initial>=17;
+  const branchGroups=[];
+  for(const x of g.draws){
+    const name=groupRanks(x.r);
+    let z=branchGroups.find(y=>y.name===name);
+    if(!z){z={name,p:0,n:0,total:x.total,soft:x.soft,done:x.done,dist:x.dist};branchGroups.push(z);}
+    z.p+=x.p;z.n+=x.n;
+  }
+  const cards=branchGroups.map(x=>{
+    const bust=x.total>21,done=x.done||bust;
+    const result=bust?{label:'爆牌，玩家贏',cls:'bad'}:done?{label:x.total>playerTotal?'莊家贏':x.total===playerTotal?'和局':'玩家贏',cls:x.total>playerTotal?'good':''}:{label:'不足17，繼續抽',cls:'drawmore'};
+    return `<div class="next-card ${result.cls}"><strong>抽 ${x.name}</strong><span>${fmt(x.p)}（${x.n} 張）</span><em>→ ${x.total} 點 · ${result.label}</em></div>`;
+  }).join('');
+  const prompt=g.initial>21?'起手已爆牌':finishNow?`起手 ${g.initial} 點，直接停牌`:`起手 ${g.initial} 點，未達17，必須補牌`;
+  const open=g.name.startsWith('10 點')?' open':'';
+  return `<details class="hole-card ${open?'prominent':''}"${open}><summary><span class="hole-name">底牌 ${g.name}</span><span class="hole-prob">${g.n}/${model.dealerHoleDen}＝${fmt(chance)}</span><span class="hole-state">${prompt}｜這條路徑最終爆牌 ${fmt(pctDist.bust)}</span></summary><div class="hole-inside"><div class="hole-final">${stats}</div>
+  ${finishNow?`<div class="next-root">莊家 ${label(up)} + ${g.name} = ${g.initial} 點 → 停牌</div>`:
+  `<div class="next-root">莊家 ${label(up)} + ${g.name} = ${g.initial} 點 → 補下一張</div><div class="path-down"></div><div class="next-leaves">${cards}</div><div class="path-basis">抽到不足17點的牌還會繼續補；上方「最終結果」已包含這些更深的路徑。</div>`}
+  </div></details>`;
+ }).join('');
+ return `<section class="dealer-paths" aria-label="莊家底牌與後續補牌組合樹"><h4>底牌有哪幾種？每條路徑怎麼走？</h4>
+ <div class="path-root">莊家明牌 ${label(up)} ＋ 未知底牌 → 一直到停在17～21或爆牌</div>
+ <div class="path-summary"><div><small>莊家最終比你大（你輸）</small><b>${fmt(lost)}</b></div><div><small>莊家最終比你小或爆牌（你贏）</small><b>${fmt(won)}</b></div><div><small>莊家與你同點（和局）</small><b>${fmt(tied)}</b></div></div>
+ <div class="path-down"></div><div class="holegrid">${holes}</div>
+ <p class="path-basis"><b>讀圖：</b>先看底牌出現機率，再看起手是否達17點；若不足17點，展開看下一張的可能點數、爆牌與後續結果。<b>每個「最終結果」是在已知該底牌的條件下計算，合計100%。</b><br>模型以剩餘未知牌面作固定比例抽樣（有放回近似），非逐張扣減的精確有限牌靴；同樣明牌的機率會隨已公開牌而改變。</p>
+ </section>`;
+}
+// 樹狀圖：玩家下一張按當前未知牌張數；莊家最終爆牌採固定比例近似。
+// 下一張三分類互斥：爆牌、不爆且非21、剛好21。切勿把「不爆」和「21」加總兩次。
+function probabilityTree(hand,model){
+ const fmt=p=>(p*100).toFixed(1)+'%';
+ const join=arr=>arr.map(x=>x.r).join('、')||'無';
+ const sum=arr=>arr.reduce((n,x)=>n+x.n,0);
+ const bad=model.breakdown.filter(x=>x.bust),exact=model.breakdown.filter(x=>x.twentyone),safe=model.breakdown.filter(x=>!x.bust&&!x.twentyone);
+ const playerTotal=score(hand.cards).total;
+ const categories=[
+   {label:'直接爆牌',kind:'loss',arr:bad,count:sum(bad)},
+   {label:'不爆（未到21）',kind:'safe',arr:safe,count:sum(safe)},
+   {label:'直接到21',kind:'win',arr:exact,count:sum(exact)}
+ ];
+ const leaf=c=>`<div class="probtree-leaf ${c.kind}"><strong>${c.label}</strong><span class="prob-number">${fmt(c.count/model.n)}</span><span class="prob-combos">${c.count} / ${model.n} 張未知牌</span><span class="prob-detail">${join(c.arr)}</span></div>`;
+ const dealerBust=model.dealerDist.bust, dealerSafe=1-dealerBust;
+ const dealerLeaf=(label,p,type,note)=>`<div class="probtree-leaf ${type}"><strong>${label}</strong><span class="prob-number">${fmt(p)}</span><span class="prob-detail">${note}</span></div>`;
+ const remain=DEALER_KEYS.filter(x=>x!=='bust').map(x=>`${x} 點 ${fmt(model.dealerDist[x])}`).join('、');
+ const up=label(value(round.dealer[0]));
+ const isSplit=hand.cards.length===2&&same(hand.cards[0],hand.cards[1]);
+ return `<div class="probtree" aria-label="目前牌局的補牌與莊家爆牌機率樹">
+  <h3>你補一張的可能結果</h3>
+  <div class="probtree-root">你 ${playerTotal} 點 → 補一張</div><div class="probtree-stem"></div>
+  <div class="probtree-leaves tree-three">${categories.map(leaf).join('')}</div>
+  <div class="probtree-foot">計算：各結果剩餘張數 ÷ ${model.n} 張未知牌。三項合計 100%。${isSplit?' 本圖假設不分牌、直接補一張。':''}</div>
+  <div style="height:1px;background:#dae5ed;margin:15px 0"></div>
+  <h3>莊家最後的結果（含蓋牌與後續補牌）</h3>
+  <div class="probtree-root">莊家明牌 ${up} + 蓋牌</div><div class="probtree-stem"></div>
+  <div class="probtree-leaves tree-two">
+   ${dealerLeaf('最終爆牌',dealerBust,'loss','你的手牌未爆時，莊家爆牌你就贏')}
+   ${dealerLeaf('最終不爆',dealerSafe,'safe','莊家停在17～21點')}
+  </div>
+  <div class="probtree-split"><div class="probbar"><span style="width:${(dealerBust*100).toFixed(3)}%;background:#d65060"></span><span style="flex:1;background:#417cbd"></span></div></div>
+  <div class="probtree-foot">最終不爆的各點數：${remain}。<br>莊家數值為目前未知牌面比例的<b>模型近似</b>，不是只補一張的爆牌率，也不是完整有限牌靴的精確解。</div>
+  <span class="probtree-foot">下方「莊家爆牌機率怎麼算」會顯示每種底牌和後續補牌的逐項計算。</span>
+ </div>`;
+}
+function renderDealerPathPanel(){
+ const panel=$('dealerDetailedPanel');if(!panel)return;
+ const hand=round?.phase==='player'?current():null;
+ if(!hand){panel.innerHTML='<p class="muted">發牌後，這裡會列出莊家可能的底牌、後續抽牌與最終點數。</p>';return;}
+ const model=probabilityModel(hand);
+ if(!model){panel.textContent='目前剩餘牌數不足。';return;}
+ panel.innerHTML=dealerDetailedPaths(model,score(hand.cards).total,value(round.dealer[0]));
+}
+function explainDecision(hand,base,rec,tc){
+ const model=probabilityModel(hand);
+ if(!model)return '<div class="coachreason">目前沒有足夠牌數可計算機率。</div>';
+ const {n,breakdown,bust,twentyone,dealerDist,evStand,evHit}=model;
+ const p=score(hand.cards),u=value(round.dealer[0]),result=rec.chosen.a;
+ const pct=x=>(100*x).toFixed(1)+'%', ev=x=>`${x>=0?'+':''}${(x*100).toFixed(1)}%`;
+ const safe=breakdown.filter(x=>!x.bust),bad=breakdown.filter(x=>x.bust);
+ const safeCount=n-bust;
+ const list=a=>a.map(x=>x.r).join('、')||'無';
+ let reason='';
+ if(result==='S'&&p.total<=16&&!p.soft&&u>=2&&u<=6){
+   reason=`莊家明牌${label(u)}，容易因強制補到17點而爆牌；你補牌可能直接輸。`;
+ }else if(result==='H'&&p.total<=16&&!p.soft){
+   reason=`莊家明牌${label(u)}，你停在${p.total}點通常偏低；補牌雖有風險，但期望損失可能較小。`;
+ }else if(result==='S'){
+   reason=`你已有${p.total}點，繼續抽牌可能損失現有優勢；停牌較合適。`;
+ }else if(result==='H'&&p.soft){
+   reason=`這是軟牌，A可由11點轉為1點，補牌通常不會立即爆牌。`;
+ }else if(result==='D'){
+   reason=`加倍後只補一張，下注與輸贏都加倍；這個組合的基本策略偏向加倍。`;
+ }else if(result==='P'){
+   reason=`起手對子分成兩手，可能改善各手起點；分牌要比較兩手總期望值。`;
+ }else{
+   reason=`目前手牌與莊家明牌的組合，依基本策略或真實計數修正作出建議。`;
+ }
+ const headline=`<li><b>原因：</b>${reason}</li>`;
+ const safeNote=`<li><b>你補一張：</b>不爆 <b>${pct(safeCount/n)}</b>（${list(safe)}）；爆 <b>${pct(bust/n)}</b>（${list(bad)}）；直接21點 ${pct(twentyone/n)}。</li>`;
+ const dealerNote=`<li><b>莊家明牌${label(u)}：</b>最終爆牌約 <b>${pct(dealerDist.bust)}</b>（含蓋牌及後續補牌）。</li>`;
+ let evNote='';
+ if(result==='S'||result==='H'){
+   const better=evStand>=evHit?'停牌':'補牌';
+   evNote=`<li><b>期望值：</b>停牌 ${ev(evStand)}／補牌 ${ev(evHit)}（每下注100元的平均損益約 ${Math.round(evStand*100)}／${Math.round(evHit*100)} 元）；本牌靴近似模型較好的是<b>${better}</b>。</li>`;
+ }
+ const countNote=rec.changed?`<li><b>算牌修正：</b>${rec.why}</li>`:'';
+ const rows=breakdown.map(x=>`<tr><td>${x.r}</td><td>${x.n}</td><td>${x.bust?'爆牌':x.next+'點'}${x.twentyone?'（21）':''}</td></tr>`).join('');
+ return `<div class="coachreason">
+  <ul class="coach-points">${headline}${evNote}${countNote}</ul>
+  ${probabilityTree(hand,model)}
+  <details class="coach-detail"><summary>展開：下一張所有牌面／剩餘張數</summary>
+   <table class="coachcards"><thead><tr><th>牌</th><th>剩餘張數</th><th>結果</th></tr></thead><tbody>${rows}</tbody></table>
+   <p class="coach-micro">下一張的比例按目前未知牌（含未翻底牌）計算；看到牌堆已抽出的牌會改變分母。</p>
+  </details>
+  ${dealerBustExplanation(model,u)}
+  <div class="coach-micro">注意：「不爆牌」不等於「會贏」。莊家最終爆牌與補／停期望值為固定牌面比例近似；未精確模擬所有有限牌靴路徑。加倍與分牌期望值尚未計算。假設真實計數只改門檻，不改實際剩餘牌組。</div>
+ </div>`;
+}
 function renderCountCoach(){
  const el=$('countCoach'),h=round?.phase==='player'?current():null;
  if(!h){el.innerHTML='<b>等待玩家決策</b><div class="why">起手牌公開後，這裡會同時顯示基本策略與真實計數修正。</div>';return;}
  const actual=getTrueCount(),scenario=$('coachScenario').value,tc=scenario==='live'?actual:Number(scenario),test=scenario!=='live';
  const rec=indexedAdvice(h,tc),s=score(h.cards),base=rec.base;
  const countLabel=(tc>=0?'+':'')+tc.toFixed(2);
- const headline=rec.changed?`<span class="shift">計數修正：${NAMES[rec.chosen.a]}</span>`:`建議：${NAMES[rec.chosen.a]}`;
- el.innerHTML=`<div class="countbig">${test?'假設':'目前'}真實計數 ${countLabel}</div>
- <div>手牌 <b>${s.total} 點</b> ／ 莊家明牌 <b>${label(value(round.dealer[0]))}</b></div>
- <div>基本策略：<b>${NAMES[base.a]}</b> → ${headline}</div>
- <div class="why"><b>原因：</b>${rec.why}</div>
+ const actionName=NAMES[rec.chosen.a];
+ el.innerHTML=`<div class="coach-action action-${rec.chosen.a}" role="status" aria-live="polite">
+    <div><div class="action-label">即時教練建議</div><div class="action-name">${actionName}</div></div>
+    <div class="action-note">${rec.changed?'因真實計數修正':'依照目前基本策略'}<br>你的 ${s.total} 點｜莊家 ${label(value(round.dealer[0]))}</div>
+ </div>
+ <div class="coach-info">目前真實計數 <b>${countLabel}</b>${test?'（教學假設）':''}，基本策略 <b>${NAMES[base.a]}</b>${rec.changed?'，計數修正為 <b>'+actionName+'</b>':''}。</div>
+ ${explainDecision(h,base,rec,tc)}
  ${rec.threshold!==undefined?`<div class="sample">判斷門檻：${rec.threshold>=0?'+':''}${rec.threshold}；目前 ${countLabel} ${tc>=rec.threshold?'已達':'未達'}門檻。</div>`:''}
  ${rec.unavailable?'<div class="why">目前不可加倍，因此使用替代動作。</div>':''}
- <div class="caption">${test?'這是假設計數，用來比較策略；沒有更動牌靴或真實計數。':'依目前已公開牌計算；數字隨牌面公開更新。'}<br>下注金額不會自動改變。計數偏離僅涵蓋少數已驗證牌型，其他維持基本策略。</div>`;
+ <div class="caption">${test?'計數為教學假設；機率仍按原牌靴計算。':'機率為本局近似估算。'}</div>`;
 }
 function show(msg){$('message').innerHTML=msg;}
 function revealHole(){if(round&&!round.revealed){round.revealed=true;countCard(round.dealer[1],'莊家底牌翻開');}}
 function start(){
  if(round?.phase==='player'||round?.phase==='dealing')return;
- let bet=Number($('bet').value);
- if(bank<bet){show('籌碼不足。請降低虛擬下注額，或重設遊戲。');return}
+ let bet=10; // 教學遊戲固定每局 10 虛擬籌碼，不再顯示下注設定。
+ if(bank<bet){show('虛擬籌碼不足；重新載入頁面可重設練習。');return}
  if(shoe.length<65)shuffle();
+ evMode='round';
  bank-=bet;
  round={dealer:[],hands:[{cards:[],bet,status:'playing',natural:false,fromAceSplit:false}],idx:0,phase:'dealing',dealStep:0,revealed:false,acesSplit:false};
  hinted=false;round.countStart=runCount;
@@ -134,7 +666,7 @@ else if(d>21||p>d){outcome='贏';payout=h.bet*2;wins++;}
 else if(p===d){outcome='平局';payout=h.bet;} bank+=payout;summary.push(`第${i+1}手 ${p}點：${outcome}（${payout-h.bet>=0?'+':''}${payout-h.bet}）`);}
 show(`<strong>本局結束｜莊家 ${d} 點</strong><div>${summary.join('<br>')}</div><small>虛擬籌碼：${bank.toFixed(0)}。單局結果不代表策略正確與否。</small>`);render();}
 function play(action){if(round?.phase!=='player')return;const h=current();if(!h||h.status!=='playing')return;if(action==='P'&&!canSplit(h)||action==='D'&&!canDouble(h))return;
-const a=indexedAdvice(h,getTrueCount()).chosen,p=score(h.cards).total,u=value(round.dealer[0]);played++;const ok=a.a===action;if(ok)correct++;log.unshift({p,up:label(u),act:NAMES[action],best:NAMES[a.a],ok});log=log.slice(0,30);hinted=false;show(`<b class="${ok?'positive':'negative'}">${ok?'策略正確':'可改善的決策'}</b>：你選「${NAMES[action]}」，目前計數策略建議「${NAMES[a.a]}」。<div>${a.why}</div>`);
+const a=indexedAdvice(h,getTrueCount()).chosen,p=score(h.cards).total,u=value(round.dealer[0]);played++;const ok=a.a===action;if(ok)correct++;log.unshift({p,up:label(u),act:NAMES[action],best:NAMES[a.a],ok});log=log.slice(0,30);hinted=false;show(`<b class="${ok?'positive':'negative'}">${ok?'策略正確':'可改善的決策'}</b>：你選「${NAMES[action]}」，目前計數策略建議「${NAMES[a.a]}」。<div>${a.why}</div><div>想知道為什麼？請查看上方「即時教練」的點數分析。</div>`);
 if(action==='H'){const c=draw();h.cards.push(c);countCard(c,'玩家補牌');if(score(h.cards).total>=21){h.status='done';round.idx++;nextHand();}else render();}
 else if(action==='S'){h.status='done';round.idx++;nextHand();}
 else if(action==='D'){bank-=h.bet;h.bet*=2;const c=draw();h.cards.push(c);countCard(c,'玩家加倍補牌');h.status='done';round.idx++;nextHand();}
@@ -147,14 +679,12 @@ function renderCount(){
  $('countRunning').textContent=signed(runCount);
  $('deckRemaining').textContent=`${remaining} 張 / ${decks.toFixed(2)} 副`;
  $('countTrue').textContent=signed(Number(tc.toFixed(2)));
- $('countFormula').innerHTML=`<div>剩餘牌數 = 6 × 52 − 已抽出 ${dealt} 張 = <b>${remaining} 張</b>；剩餘副數 = ${remaining} ÷ 52 = <b>${decks.toFixed(2)} 副</b></div><div style="margin-top:5px">真實計數 = 累積 ${signed(runCount)} ÷ 剩餘 ${decks.toFixed(2)} 副 = <b>${signed(Number(tc.toFixed(2)))}</b></div>`;
  $('countStatus').textContent=round?.phase==='player'?'玩家決策中':round?.phase==='done'?'本局結束':round?.phase==='readyResult'?'等待揭開底牌':'準備發牌';
- $('countFootnote').textContent=`本局已公開的牌造成 ${signed(change)} 的變化；已公開 ${countLedger.length} 張（含之前局數）。莊家底牌未揭開前不計分。虛擬下注由你手動選擇，不會依計數自動調整。`;
 }
 function render(){const active=round?.phase==='player',h=active?current():null;if(h)stratTab=kind(h.cards);$('bank').textContent=bank.toLocaleString('zh-TW');$('accuracy').textContent=played?Math.round(correct/played*100)+'%':'—';$('running').textContent=signed(runCount);$('truecount').textContent=signed(Number((runCount/Math.max(shoe.length/52,0.25)).toFixed(1)));$('rounds').textContent=`${rounds} / ${wins}`;
 $('dealerCards').innerHTML=round?round.dealer.map((c,i)=>cardHTML(c,(round.phase==='dealing'&&round.dealStep<2)|| (i===1&&!round.revealed))).join(''):'';$('dealerScore').textContent=round?(round.phase==='dealing'&&round.dealStep<2?'莊家明牌尚未揭開':round.revealed?`莊家：${score(round.dealer).total}點`:`明牌：${value(round.dealer[0])}點（底牌尚未公開）`):'尚未發牌';
 $('hands').innerHTML=round?round.hands.map((v,i)=>`<div class="hand ${active&&i===round.idx?'active':''}"><div class="small">第${i+1}手 · ${v.bet} 籌碼 ${v.status==='done'?'· 已完成':''}</div><div class="cards">${v.cards.map((c,j)=>cardHTML(c,round.phase==='dealing'&& (j===0?round.dealStep<1:round.dealStep<3))).join('')}</div><div>${round.phase==='dealing'?'逐張揭牌中':score(v.cards).total+'點'+(score(v.cards).soft?'（軟）':'（硬）')}</div></div>`).join(''):'<span>開始發牌後顯示</span>';
-$('deal').disabled=active;$('deal').textContent=round?.phase==='dealing'?(round.dealStep<3?'翻下一張':'開始決策'):round?.phase==='player'?'決策中':round?.phase==='readyResult'?'查看結果':round?.phase==='done'?'下一局':'開始發牌';$('hit').disabled=!active;$('stand').disabled=!active;$('double').disabled=!active||!canDouble(h);$('split').disabled=!active||!canSplit(h);renderCount();renderCountCoach();renderSide();renderStrategy();}
+$('deal').disabled=active;$('deal').textContent=round?.phase==='dealing'?(round.dealStep<3?'翻下一張':'開始決策'):round?.phase==='player'?'決策中':round?.phase==='readyResult'?'查看結果':round?.phase==='done'?'下一局':'開始發牌';$('hit').disabled=!active;$('stand').disabled=!active;$('double').disabled=!active||!canDouble(h);$('split').disabled=!active||!canSplit(h);renderCount();renderCountCoach();renderEvWalkthrough();renderDealerPathPanel();renderSide();renderStrategy();}
 function renderSide(){document.querySelectorAll('[data-tab]').forEach(el=>el.classList.toggle('sel',el.dataset.tab===tab));let html='';let h=round?.phase==='player'?current():null;if(tab==='lesson'){html='<p>先依你目前的牌型選擇，再到下方策略表查黃色框。</p>';if(h){let s=score(h.cards),a=getAdvice(h);html+=`<p><b>目前：</b>你 ${s.total} 點（${s.soft?'軟':'硬'}牌），莊家明牌 ${value(round.dealer[0])}。</p><p>對照表位置：<strong>${kind(h.cards)}牌／${rowName(h.cards)}／莊家${label(value(round.dealer[0]))}</strong></p>`;if(hinted)html+=`<div class="tip"><b>最佳操作：${NAMES[a.a]}</b><div>${a.why}</div></div>`}else html+='<p>發牌後，這裡會解釋每一手的策略。</p>'}
 else if(tab==='count'){html='<p><b>Hi-Lo 計數</b></p><table><tr><td>2、3、4、5、6</td><td>+1</td></tr><tr><td>7、8、9</td><td>0</td></tr><tr><td>10、J、Q、K、A</td><td>−1</td></tr></table><p>真實計數＝已看見的牌的累積計數 ÷ 剩餘牌靴副數。</p><p>底牌未翻開前不納入累積計數；真實計數分母僅是近似值，實體賭桌看不到牌靴每張牌。</p>'}
 else html=`<p>局數：${rounds}；贏手：${wins}；策略判斷：${correct} / ${played}</p><div class="meter"><div style="width:${played?correct/played*100:0}%"></div></div><div class="tablewrap" style="margin-top:9px"><table style="width:100%;font-size:12px"><tr><th>我方</th><th>莊家</th><th>操作</th><th>策略</th></tr>${log.map(x=>`<tr><td>${x.p}</td><td>${x.up}</td><td class="${x.ok?'positive':'negative'}">${x.act}</td><td>${x.best}</td></tr>`).join('')}</table></div>`;$('side').innerHTML=html;}
@@ -166,6 +696,6 @@ function renderStrategy(){document.querySelectorAll('[data-strategy]').forEach(b
 let head='<tr><th>你的牌 \ 莊家</th>'+upcols.map(u=>`<th>${u}</th>`).join('')+'</tr>';
 let body=data.map(r=>`<tr><td>${r.row}</td>${r.cells.map((a,i)=>`<td class="${a} ${focus===r.row&&up===upcols[i]?'focus':''}" title="${NAMES[a]}">${a==='H'?'補':a==='S'?'停':a==='D'?'倍':'分'}</td>`).join('')}</tr>`).join('');$('strategyTable').innerHTML=head+body;
 $('strategyExplanation').textContent=stratTab==='hard'?'硬牌：沒有可當作11點而不爆牌的A。表內「倍」若不能加倍一般改補牌。':stratTab==='soft'?'軟牌：有A可算11點。例外：A+7對3～6加倍，不能加倍改停牌；其餘加倍不能執行時改補牌。':'對子：分牌僅限起手兩張相同點數且符合遊戲條件。10/J/Q/K視為10點對子；本遊戲最多四手，A不能重分。';}
-$('coachScenario').onchange=renderCountCoach;$('deal').onclick=()=>{if(round?.phase==='readyResult')revealInitialResult();else start()};$('hit').onclick=()=>play('H');$('stand').onclick=()=>play('S');$('double').onclick=()=>play('D');$('split').onclick=()=>play('P');$('hint').onclick=()=>{if(round?.phase!=='player'){show('請先發牌。');return}hinted=true;tab='lesson';stratTab=kind(current().cards);render();const rec=indexedAdvice(current(),getTrueCount());show(`<b>基本策略：${NAMES[rec.base.a]}｜依計數：${NAMES[rec.chosen.a]}</b><div>${rec.why}</div>請參考即時教練；下方黃色框仍為基本策略表。`)};$('reset').onclick=()=>{bank=1000;played=correct=rounds=wins=0;log=[];round=null;hinted=false;shuffle();show('已重設所有虛擬籌碼、訓練紀錄及牌靴。');render()};document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;renderSide()});document.querySelectorAll('[data-strategy]').forEach(b=>b.onclick=()=>{stratTab=b.dataset.strategy;renderStrategy()});shuffle();render();
+$('coachScenario').onchange=renderCountCoach;$('deal').onclick=()=>{if(round?.phase==='readyResult')revealInitialResult();else start()};$('hit').onclick=()=>play('H');$('stand').onclick=()=>play('S');$('double').onclick=()=>play('D');$('split').onclick=()=>play('P');document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;renderSide()});document.querySelectorAll('[data-strategy]').forEach(b=>b.onclick=()=>{stratTab=b.dataset.strategy;renderStrategy()});shuffle();render();
 })();
 </script></body></html>
